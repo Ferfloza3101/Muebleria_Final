@@ -1,0 +1,165 @@
+/* detalle de pedido */
+.detalle-pedido-main-wrapper {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    padding: 32px 28px 32px 28px;
+    margin-bottom: 32px;
+    border: 1px solid #e0e0e0;
+    margin-top: 80px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+}
+.detalle-pedido-main {
+    flex: 2 1 60%;
+    min-width: 320px;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin-bottom: 0;
+}
+.detalle-pedido-header {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 18px;
+}
+.detalle-pedido-header h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 0;
+}
+.detalle-pedido-header .detalle-pedido-fecha {
+    color: #888;
+    font-size: 1rem;
+    font-weight: 400;
+}
+.detalle-pedido-estado {
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 4px 16px;
+    border-radius: 16px;
+    background: #111;
+    color: #fff;
+    border: 1px solid #111;
+    margin-bottom: 12px;
+    text-transform: capitalize;
+}
+.detalle-pedido-estado.pendiente { color: #bfa100; background: #fffbe6; border-color: #fff3cd; }
+.detalle-pedido-estado.procesando { color: #0056b3; background: #e6f0ff; border-color: #b3d1ff; }
+.detalle-pedido-estado.enviado { color: #222; background: #f0f0f0; border-color: #d1d1d1; }
+.detalle-pedido-estado.entregado { color: #0a7d00; background: #e6ffe6; border-color: #b3ffb3; }
+.detalle-pedido-info {
+    font-size: 1.05rem;
+    color: #222;
+    margin-bottom: 24px;
+}
+.detalle-pedido-info strong {
+    color: #111;
+    font-weight: 500;
+}
+.detalle-pedido-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 24px;
+}
+.detalle-pedido-table th, .detalle-pedido-table td {
+    border-bottom: 1px solid #e0e0e0;
+    padding: 10px 8px;
+    text-align: left;
+    font-size: 1rem;
+}
+.detalle-pedido-table th {
+    background: #fafafa;
+    font-weight: 600;
+    color: #111;
+}
+.detalle-pedido-table tfoot td {
+    font-weight: bold;
+    color: #111;
+    background: #fafafa;
+}
+.detalle-pedido-producto-img {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 10px;
+    border: 1px solid #e0e0e0;
+}
+.detalle-pedido-acciones {
+    display: flex;
+    gap: 10px;
+    margin-top: 32px;
+    justify-content: flex-end;
+}
+
+/* contenedor de producto en fila */
+.detalle-pedido-producto-wrapper {
+    display: flex;
+    align-items: center;
+}
+.detalle-pedido-acciones .btn {
+    font-size: 0.95rem;
+    border-radius: 8px;
+    padding: 6px 14px;
+    border: 1px solid #111;
+    background: #fff;
+    color: #111;
+    font-weight: bold;
+    transition: background 0.2s, color 0.2s;
+    min-width: 110px;
+    text-decoration: none;
+}
+
+/* contenedor para volver */
+.detalle-pedido-back {
+    text-align: center;
+}
+.detalle-pedido-acciones .btn:visited {
+    color: #111;
+    text-decoration: none;
+}
+.detalle-pedido-acciones .btn:hover {
+    background: #111;
+    color: #fff;
+    text-decoration: none;
+}
+.detalle-pedido-side {
+    flex: 1 1 280px;
+    min-width: 240px;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin-bottom: 0;
+}
+.detalle-pedido-side h5 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #111;
+    margin-bottom: 10px;
+}
+.detalle-pedido-side p {
+    font-size: 1rem;
+    color: #222;
+    margin-bottom: 8px;
+}
+.detalle-pedido-side .text-muted {
+    color: #888 !important;
+}
+@media (max-width: 900px) {
+    .detalle-pedido-main, .detalle-pedido-side {
+        padding: 16px 6px 16px 6px;
+    }
+    .detalle-pedido-acciones {
+        flex-direction: column;
+        gap: 8px;
+        align-items: stretch;
+    }
+}

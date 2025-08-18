@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmar pedido</title>
+    <link rel="stylesheet" href="{% static 'productos/css/checkout.css' %}">
+</head>
+<body>
+<div class="checkout-container">
+    <h1 class="checkout-title">Confirmar pedido</h1>
+    <div class="direccion-resumen">
+        <h2>Dirección de envío</h2>
+        <div class="direccion-detalle">{{ direccion.get_direccion_completa }}</div>
+        <div class="direccion-telefono">Tel: {{ direccion.telefono }}</div>
+    </div>
+    <div class="checkout-lista">
+        {% for item in items %}
+        <div class="checkout-item checkout-item-confirm">
+            <div class="checkout-item-info">
+                <div class="checkout-item-nombre">{{ item.producto.nombre }}</div>
+                <div class="checkout-item-cantidad-sub">
+                    <span class="checkout-item-cantidad">Cantidad: {{ item.cantidad }}</span>
+                    <span class="checkout-item-subtotal">Subtotal: ${{ item.subtotal|floatformat:2 }}</span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="checkout-total">
+        <span>Total:</span>
+        <span class="checkout-total-monto">${{ total|floatformat:2 }}</span>
+    </div>
+    <div class="checkout-acciones">
+        <button class="checkout-btn-pagar" id="btnPagarConfirmar">Pagar con MercadoPago</button>
+        <form id="formPagoPrueba" class="checkout-prueba-form" method="post" action="{% url 'productos:pago_prueba' %}">
+            {% csrf_token %}
+            <input type="hidden" name="direccion_id" value="{{ direccion.id }}">
+            <button type="submit" class="checkout-btn-prueba">Pago de prueba</button>
+        </form>
+    </div>
+    <div class="checkout-links">
+        <a href="/productos/carrito/seleccionar-direccion/">Cambiar dirección</a>
+        <a href="/productos/carrito/">Volver al carrito</a>
+    </div>
+</div>
+<script src="{% static 'productos/js/checkout.js' %}"></script>
+</body>
+</html> 

@@ -1,0 +1,47 @@
+CONFIRMACIÓN DE PEDIDO - Mueblería OPTI
+========================================
+
+✅ ¡Su pedido ha sido confirmado!
+
+Hemos recibido su pedido y lo estamos procesando.
+
+Pedido #{{ pedido.numero_pedido }}
+Fecha: {{ pedido.fecha_pedido|date:"d/m/Y H:i" }}
+Estado: {{ pedido.get_estado_display }}
+
+DATOS DEL CLIENTE:
+------------------
+Nombre: {{ datos_cliente.nombre }}
+Email: {{ datos_cliente.email }}
+{% if datos_cliente.telefono %}Teléfono: {{ datos_cliente.telefono }}{% endif %}
+
+{% if datos_envio %}
+DIRECCIÓN DE ENVÍO:
+-------------------
+Dirección: {{ datos_envio.direccion_completa }}
+{% if datos_envio.telefono %}Teléfono: {{ datos_envio.telefono }}{% endif %}
+
+{% endif %}
+RESUMEN DE PRODUCTOS:
+---------------------
+{% for detalle in pedido.detalles.all %}
+- {{ detalle.producto.nombre }}
+  Cantidad: {{ detalle.cantidad }}
+  Precio: ${{ detalle.precio_unitario|floatformat:2 }}
+  Subtotal: ${{ detalle.subtotal|floatformat:2 }}
+
+{% endfor %}
+TOTAL: ${{ pedido.total_pedido|floatformat:2 }}
+
+PRÓXIMOS PASOS:
+---------------
+- Recibirá una notificación cuando su pedido esté siendo procesado
+- Le enviaremos el número de seguimiento cuando el pedido sea enviado
+- Puede contactarnos en cualquier momento si tiene preguntas
+
+========================================
+Gracias por su compra
+
+Si tiene alguna pregunta, no dude en contactarnos.
+
+Este email fue generado automáticamente el {{ fecha_actual }} 

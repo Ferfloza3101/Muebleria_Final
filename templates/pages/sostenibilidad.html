@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Sostenibilidad | Umbra Furniture{% endblock %}
+
+{% block extra_css %}
+<style>
+  .section { max-width: 900px; margin: 88px auto 64px; padding: 0 16px; }
+  h1 { font-size: 32px; margin-bottom: 8px; }
+  .muted { color:#666; margin-bottom: 24px; }
+  .grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 16px; }
+  .pill { border:1px solid #eee; border-radius: 12px; padding: 14px; background:#fff; }
+  .back-link { display:inline-block; margin-top: 24px; color:#111; text-decoration:none; border-bottom:1px solid #111; }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="section">
+  <h1>Sostenibilidad</h1>
+  <p class="muted">Diseñamos con un enfoque responsable para minimizar nuestro impacto ambiental.</p>
+  <div class="grid">
+    <div class="pill">Maderas reforestadas</div>
+    <div class="pill">Acabados bajos en VOC</div>
+    <div class="pill">Optimización de residuos</div>
+    <div class="pill">Empaques reciclables</div>
+  </div>
+  <a class="back-link" href="{% url 'sobre_nosotros' %}">Volver a Sobre nosotros</a>
+</section>
+{% endblock %}
+
+
+

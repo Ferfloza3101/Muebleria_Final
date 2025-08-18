@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Mis Pedidos - Mueblería OPTI{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'productos/css/pedidos.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Mis Pedidos</h1>
+    
+    {% if pedidos %}
+        <div class="pedidos-lista">
+            {% for pedido in pedidos %}
+            <div class="pedido-card">
+                <div class="pedido-header">
+                    <span class="pedido-numero">Pedido #{{ pedido.numero_pedido }}</span>
+                    <span class="pedido-estado {% if pedido.estado == 'pendiente' %}pendiente{% elif pedido.estado == 'procesando' %}procesando{% elif pedido.estado == 'enviado' %}enviado{% elif pedido.estado == 'entregado' %}entregado{% endif %}">
+                        {{ pedido.get_estado_display }}
+                    </span>
+                </div>
+                <div class="pedido-info">
+                    <div><strong>Fecha:</strong> {{ pedido.fecha_pedido|date:"d/m/Y H:i" }}</div>
+                    <div><strong>Total:</strong> ${{ pedido.total_pedido|floatformat:2 }}</div>
+                    <div><strong>Método de pago:</strong> {{ pedido.metodo_pago }}</div>
+                    {% if pedido.direccion_envio %}
+                    <div><strong>Dirección:</strong> {{ pedido.direccion_envio.get_direccion_corta }}</div>
+                    {% endif %}
+                </div>
+                <div class="pedido-acciones">
+                    <a href="{% url 'productos:detalle_pedido' pedido.id %}" class="btn btn-sm">Ver Detalle</a>
+                    {% if pedido.resumen %}
+                    <a href="{% url 'productos:descargar_resumen_pdf' pedido.resumen.id %}" class="btn btn-sm">Descargar PDF</a>
+                    <button class="btn btn-sm js-reenviar-resumen" data-pedido-id="{{ pedido.id }}" data-url="{% url 'productos:enviar_resumen_email' %}">Reenviar Email</button>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            <h4>No tienes pedidos aún</h4>
+            <p>Cuando realices tu primera compra, aquí podrás ver el historial de todos tus pedidos.</p>
+            <a href="{% url 'productos:lista_productos' %}" class="btn btn-primary">Ver Productos</a>
+        </div>
+    {% endif %}
+</div>
+
+<script src="{% static 'productos/js/mis_pedidos.js' %}"></script>
+{% endblock %} 

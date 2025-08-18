@@ -1,0 +1,137 @@
+:root {
+  --background-color: #fafbfc;
+  --text-color: #111;
+  --border-color: #ddd;
+  --border-hover: #222;
+  --error-color: #d32f2f;
+  --input-bg: #fff;
+  --btn-bg: #111;
+  --btn-hover: #222;
+  --radius: 10px;
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --font-main: 'Montserrat', system-ui, sans-serif;
+}
+
+body {
+  background: var(--background-color);
+  font-family: var(--font-main);
+  color: var(--text-color);
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-minimal-container {
+  width: 100%;
+  max-width: 420px;
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 42px 36px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-minimal-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.form-minimal-error {
+  width: 100%;
+  background: #fff5f5;
+  color: var(--error-color);
+  padding: 12px 18px;
+  font-size: 0.95rem;
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+  text-align: center;
+  border: 1px solid #f9c0c0;
+}
+
+.form-minimal {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+}
+
+.form-minimal label {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.form-minimal input,
+.form-minimal select {
+  padding: 11px 14px;
+  background: var(--input-bg);
+  color: var(--text-color);
+  font-size: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  transition: all 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-minimal input:focus,
+.form-minimal select:focus {
+  border-color: var(--border-hover);
+  outline: 2px solid #2221;
+}
+
+.form-minimal input[type="date"] {
+  width: 100%;
+  min-width: 0;
+}
+
+.form-minimal-btn {
+  background: var(--btn-bg);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  padding: 12px 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.form-minimal-btn:hover {
+  background: var(--btn-hover);
+}
+
+.form-minimal-links {
+  margin-top: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.form-minimal-links a {
+  font-size: 0.95rem;
+  color: var(--text-color);
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+.form-minimal-links a:hover {
+  color: var(--border-hover);
+}
+
+@media (max-width: 600px) {
+  .form-minimal-container {
+    padding: 28px 6vw;
+  }
+} 

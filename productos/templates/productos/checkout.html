@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout - Confirmar pedido</title>
+    <link rel="stylesheet" href="{% static 'productos/css/checkout.css' %}">
+</head>
+<body>
+<div class="checkout-container">
+    <h1 class="checkout-title">Confirmar pedido</h1>
+    {% if items and items|length > 0 %}
+        <div class="checkout-lista">
+            {% for item in items %}
+            <div class="checkout-item" data-id="{{ item.producto.id }}">
+                <div class="checkout-item-img">
+                    <img src="{{ item.producto.imagen_principal.url }}" alt="{{ item.producto.nombre }}">
+                </div>
+                <div class="checkout-item-info">
+                    <div class="checkout-item-nombre">{{ item.producto.nombre }}</div>
+                    <div class="checkout-item-precio">${{ item.precio_unitario|floatformat:2 }}</div>
+                    <div class="checkout-item-cantidad">Cantidad: {{ item.cantidad }}</div>
+                    <div class="checkout-item-subtotal">Subtotal: ${{ item.subtotal|floatformat:2 }}</div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="checkout-total">
+            <span>Total:</span>
+            <span class="checkout-total-monto">${{ total|floatformat:2 }}</span>
+        </div>
+        <div class="checkout-acciones">
+            <button class="checkout-btn-pagar" id="btnPagarCheckout">Pagar con MercadoPago</button>
+        </div>
+    {% else %}
+        <div class="checkout-vacio">Tu carrito está vacío.</div>
+    {% endif %}
+    <div class="checkout-links">
+        <a href="/productos/carrito/">Volver al carrito</a>
+        <a href="/productos/">Seguir comprando</a>
+    </div>
+</div>
+<script src="{% static 'productos/js/checkout.js' %}"></script>
+</body>
+</html> 

@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Detalle Pedido #{{ pedido.numero_pedido }} - Mueblería OPTI{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'productos/css/detalle_pedido.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="detalle-pedido-main-wrapper">
+    <div class="detalle-pedido-main">
+        <div class="detalle-pedido-header">
+            <h2>Pedido #{{ pedido.numero_pedido }}</h2>
+            <div class="detalle-pedido-fecha">Realizado el {{ pedido.fecha_pedido|date:"d/m/Y H:i" }}</div>
+            <span class="detalle-pedido-estado {% if pedido.estado == 'pendiente' %}pendiente{% elif pedido.estado == 'procesando' %}procesando{% elif pedido.estado == 'enviado' %}enviado{% elif pedido.estado == 'entregado' %}entregado{% endif %}">
+                {{ pedido.get_estado_display }}
+            </span>
+        </div>
+        <div class="detalle-pedido-info">
+            <div><strong>Método de pago:</strong> {{ pedido.metodo_pago }}</div>
+        </div>
+        <h5>Productos</h5>
+        <div class="table-responsive">
+            <table class="detalle-pedido-table">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Precio Unit.</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for detalle in pedido.detalles.all %}
+                    <tr>
+                        <td>
+                            <div class="detalle-pedido-producto-wrapper">
+                                {% if detalle.producto.imagen_principal %}
+                                <img src="{{ detalle.producto.imagen_principal.url }}" alt="{{ detalle.producto.nombre }}" class="detalle-pedido-producto-img">
+                                {% endif %}
+                                <div>
+                                    <strong>{{ detalle.producto.nombre }}</strong>
+                                    {% if detalle.producto.categoria %}
+                                    <br><small class="text-muted">{{ detalle.producto.categoria.nombre }}</small>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </td>
+                        <td>{{ detalle.cantidad }}</td>
+                        <td>${{ detalle.precio_unitario|floatformat:2 }}</td>
+                        <td>${{ detalle.subtotal|floatformat:2 }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" class="text-right"><strong>Total:</strong></td>
+                        <td><strong>${{ pedido.total_pedido|floatformat:2 }}</strong></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <div class="detalle-pedido-side">
+        <h5>Información del Cliente</h5>
+        {% with datos_cliente=pedido.get_datos_cliente %}
+        <p><strong>Nombre:</strong><br>{{ datos_cliente.nombre }}</p>
+        <p><strong>Email:</strong><br>{{ datos_cliente.email }}</p>
+        {% if datos_cliente.telefono %}
+        <p><strong>Teléfono:</strong><br>{{ datos_cliente.telefono }}</p>
+        {% endif %}
+        {% endwith %}
+        {% if pedido.direccion_envio %}
+        <h5>Dirección de Envío</h5>
+        {% with datos_envio=pedido.get_datos_envio %}
+        <p><strong>Dirección:</strong><br>{{ datos_envio.direccion_completa }}</p>
+        {% if datos_envio.telefono %}
+        <p><strong>Teléfono:</strong><br>{{ datos_envio.telefono }}</p>
+        {% endif %}
+        {% endwith %}
+        {% endif %}
+        <h5>Acciones</h5>
+        <div class="detalle-pedido-acciones">
+            {% if pedido.resumen %}
+            <a href="{% url 'productos:descargar_resumen_pdf' pedido.resumen.id %}" class="btn">Descargar PDF</a>
+            <button class="btn js-enviar-resumen-email" data-pedido-id="{{ pedido.id }}">Reenviar Email</button>
+            {% if pedido.resumen.archivo_pdf %}
+            <a href="{% url 'productos:descargar_resumen_pdf' pedido.resumen.id %}" target="_blank" class="btn">Previsualizar PDF</a>
+            {% endif %}
+            {% else %}
+            <p class="text-muted">No hay resumen disponible para este pedido.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<div class="mt-4 detalle-pedido-back">
+    <a href="{% url 'usuarios:perfil' %}#pedidos" class="btn btn-secondary">← Volver a Mis Pedidos</a>
+</div>
+
+<script src="{% static 'productos/js/factura.js' %}"></script>
+{% if pedido.metodo_pago == 'Pago de prueba' %}
+    <div id="detallePedidoPrueba" 
+         data-pedido='{
+        "numero_pedido": "{{ pedido.numero_pedido|escapejs }}",
+        "fecha_pedido": "{{ pedido.fecha_pedido|date:'d/m/Y H:i' }}",
+        "cliente": {
+            "nombre": "{{ pedido.get_datos_cliente.nombre|escapejs }}",
+            "email": "{{ pedido.get_datos_cliente.email|escapejs }}",
+            "telefono": "{{ pedido.get_datos_cliente.telefono|escapejs }}"
+        },
+        "envio": {
+            "direccion_completa": "{{ pedido.get_datos_envio.direccion_completa|escapejs }}",
+            "telefono": "{{ pedido.get_datos_envio.telefono|escapejs }}"
+        },
+        "productos": [
+            {% for detalle in pedido.detalles.all %}
+            {
+                "nombre": "{{ detalle.producto.nombre|escapejs }}",
+                "cantidad": {{ detalle.cantidad }},
+                "precio_unitario": {{ detalle.precio_unitario }},
+                "subtotal": {{ detalle.subtotal }}
+            }{% if not forloop.last %},{% endif %}
+            {% endfor %}
+        ],
+        "total": {{ pedido.total_pedido }},
+        "resumen_id": {{ pedido.resumen.id }}
+    }'
+    data-pdf-existe="{% if pedido.resumen.archivo_pdf %}{{ pedido.resumen.archivo_pdf.url }}{% endif %}">
+    </div>
+    <script src="{% static 'productos/js/checkout_prueba.js' %}"></script>
+{% endif %}
+<script src="{% static 'productos/js/detalle_pedido.js' %}"></script>
+{% endblock %} 

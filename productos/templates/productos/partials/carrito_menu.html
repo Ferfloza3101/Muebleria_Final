@@ -1,0 +1,26 @@
+{% load static %}
+{% if items and items|length > 0 %}
+  <div class="cart-list">
+    {% for item in items %}
+      <div class="cart-item-row">
+        <img src="{{ item.producto.imagen_principal.url }}" alt="{{ item.producto.nombre }}" class="cart-thumb">
+        <div class="cart-info">
+          <a href="{% url 'productos:detalle_producto' item.producto.id %}" class="cart-title">{{ item.producto.nombre }}</a>
+          <div class="cart-qty-controls">
+            <button class="cart-qty-btn cart-qty-minus" data-product-id="{{ item.producto.id }}">-</button>
+            <span class="cart-qty">{{ item.cantidad }}</span>
+            <button class="cart-qty-btn cart-qty-plus" data-product-id="{{ item.producto.id }}">+</button>
+          </div>
+        </div>
+        <span class="cart-price">${{ item.precio_unitario|floatformat:2 }}</span>
+        <button class="cart-remove-btn" data-product-id="{{ item.producto.id }}" title="Eliminar" aria-label="Eliminar {{ item.producto.nombre }}"><i class="fas fa-times"></i></button>
+      </div>
+    {% endfor %}
+    <div class="cart-subtotal">Subtotal: <b>${{ subtotal|floatformat:2 }}</b></div>
+    <a href="{% url 'productos:ver_carrito' %}" class="cart-menu-link">Ver carrito</a>
+    <button class="cart-clear-btn">Vaciar carrito</button>
+  </div>
+{% else %}
+  <div class="cart-empty">No hay productos en el carrito.</div>
+{% endif %}
+<link rel="stylesheet" href="{% static 'productos/css/carrito_menu.css' %}"> 

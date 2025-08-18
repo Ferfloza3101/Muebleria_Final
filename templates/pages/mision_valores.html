@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Misión y Valores | Umbra Furniture{% endblock %}
+
+{% block extra_css %}
+<style>
+  .section { max-width: 900px; margin: 88px auto 64px; padding: 0 16px; }
+  .header { margin-bottom: 24px; }
+  .header h1 { font-size: 36px; margin: 0 0 8px; }
+  .muted { color:#666; }
+  .grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap: 16px; margin-top: 24px; }
+  .card { border:1px solid #eee; border-radius: 10px; padding: 16px; background:#fff; }
+  .card h3 { margin: 0 0 6px; font-size: 18px; }
+  .card p { margin: 0; color:#555; }
+  .back-link { display:inline-block; margin-top: 24px; color:#111; text-decoration:none; border-bottom:1px solid #111; }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="header">
+    <h1>Misión y valores</h1>
+    <p class="muted">Nuestro compromiso con el diseño, la calidad y las personas.</p>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <h3>Misión</h3>
+      <p>Crear espacios que inspiren a través de muebles atemporales y responsables.</p>
+    </div>
+    <div class="card">
+      <h3>Calidad</h3>
+      <p>Seleccionamos materiales certificados y cuidamos cada detalle en la fabricación.</p>
+    </div>
+    <div class="card">
+      <h3>Servicio</h3>
+      <p>Acompañamos a nuestros clientes antes y después de cada compra.</p>
+    </div>
+    <div class="card">
+      <h3>Integridad</h3>
+      <p>Transparencia en procesos, precios y garantía.</p>
+    </div>
+  </div>
+  <a class="back-link" href="{% url 'sobre_nosotros' %}">Volver a Sobre nosotros</a>
+</section>
+{% endblock %}
+
+
+

@@ -1,0 +1,122 @@
+body {
+    background: #fafbfc;
+    font-family: 'Montserrat', Arial, sans-serif;
+    color: #111;
+    margin: 0;
+}
+.cambiar-contrasena-container {
+    max-width: 400px;
+    margin: 60px auto 0 auto;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.07);
+    padding: 36px 32px 28px 32px;
+}
+.cambiar-contrasena-container h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 18px;
+    text-align: center;
+}
+.cambiar-contrasena-instrucciones {
+    font-size: 1.01rem;
+    color: #444;
+    margin-bottom: 18px;
+}
+.cambiar-contrasena-instrucciones ul {
+    margin: 8px 0 0 18px;
+    padding: 0;
+    color: #222;
+    font-size: 0.98rem;
+}
+.cambiar-contrasena-errores {
+    background: #fff0f0;
+    color: #d32f2f;
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin-bottom: 16px;
+    font-size: 1rem;
+}
+.cambiar-contrasena-errores ul {
+    margin: 0;
+    padding-left: 18px;
+}
+.cambiar-contrasena-exito {
+    background: #e8f5e9;
+    color: #111;
+    border-radius: 6px;
+    padding: 10px 16px;
+    margin-bottom: 16px;
+    font-size: 1rem;
+    text-align: center;
+}
+.cambiar-contrasena-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.form-row label {
+    font-size: 1rem;
+    color: #222;
+    font-weight: 500;
+}
+.form-row input[type="password"] {
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    background: #fff;
+    color: #222;
+    outline: none;
+    transition: border 0.2s;
+}
+.form-row input[type="password"]:focus {
+    border: 1.5px solid #111;
+}
+.cambiar-contrasena-btn {
+    background: #111;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 0;
+    font-size: 1.08rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.2s, color 0.2s;
+}
+.cambiar-contrasena-btn:hover {
+    background: #222;
+}
+.cambiar-contrasena-feedback {
+    font-size: 0.97rem;
+    margin-top: 2px;
+    min-height: 18px;
+    color: #d32f2f;
+}
+.cambiar-contrasena-feedback.ok {
+    color: #388e3c;
+}
+.cambiar-contrasena-links {
+    margin-top: 18px;
+    text-align: center;
+}
+.cambiar-contrasena-links a {
+    color: #111;
+    text-decoration: underline;
+    font-size: 1rem;
+}
+.cambiar-contrasena-links a:hover {
+    color: #222;
+}
+@media (max-width: 600px) {
+    .cambiar-contrasena-container {
+        max-width: 98vw;
+        padding: 18px 4vw 18px 4vw;
+    }
+} 

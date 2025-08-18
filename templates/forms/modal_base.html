@@ -1,0 +1,56 @@
+{% comment %}
+Template base para modales de productos
+Uso: {% include 'forms/modal_base.html' with producto=producto %}
+{% endcomment %}
+
+<div id="modal-{{ producto.id }}" class="product-modal">
+    <div class="modal-content">
+        <!-- Galería de imágenes -->
+        <div class="modal-gallery">
+            <div class="modal-image-wrapper">
+                <i class="fas fa-chevron-left modal-nav-arrow prev-arrow"></i>
+                <img src="{{ producto.imagen_principal.url }}" 
+                     alt="{{ producto.nombre }}" 
+                     class="modal-product-image"
+                     data-images='[{"url":"{{ producto.imagen_principal.url }}"}{% for img in producto.imagenes.all %}{% if img.imagen.url != producto.imagen_principal.url %}, {"url":"{{ img.imagen.url }}"}{% endif %}{% endfor %}]'
+                     data-current-image="0">
+                <i class="fas fa-chevron-right modal-nav-arrow next-arrow"></i>
+            </div>
+            <div class="modal-image-dots"></div>
+        </div>
+        
+        <!-- Información del producto -->
+        <div class="modal-info">
+            <h2 class="modal-product-name">{{ producto.nombre }}</h2>
+            <p class="modal-product-category">{{ producto.categoria.nombre }}</p>
+            <p class="modal-product-description">{{ producto.descripcion }}</p>
+            
+            <div class="modal-product-pricing">
+                {% if producto.oferta_activa and producto.precio_oferta and producto.precio_oferta < producto.precio %}
+                    <span class="modal-original-price">${{ producto.precio|floatformat:2 }}</span>
+                    <span class="modal-sale-price">${{ producto.precio_oferta|floatformat:2 }}</span>
+                {% else %}
+                    <span class="modal-price">${{ producto.precio|floatformat:2 }}</span>
+                {% endif %}
+            </div>
+            
+            <div class="modal-stock">
+                Stock disponible: <b>{% if producto.inventario %}{{ producto.inventario.stock }}{% else %}0{% endif %}</b>
+            </div>
+            
+            <div class="modal-actions">
+                <button class="modal-wishlist-btn{% if wishlist_ids and producto.id in wishlist_ids %} active{% endif %}" 
+                        data-product-id="{{ producto.id }}">
+                    <i class="fa{% if wishlist_ids and producto.id in wishlist_ids %}s{% else %}r{% endif %} fa-heart"></i> 
+                    Agregar a favoritos
+                </button>
+                <button class="modal-cart-btn" data-product-id="{{ producto.id }}">
+                    <i class="fas fa-shopping-cart"></i> 
+                    Agregar al carrito
+                </button>
+            </div>
+        </div>
+        
+        <button type="button" class="close-modal" aria-label="Cerrar modal">&times;</button>
+    </div>
+</div> 

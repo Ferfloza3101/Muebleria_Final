@@ -1,0 +1,39 @@
+RESUMEN DE PEDIDO - Mueblería OPTI
+=====================================
+
+Pedido #{{ pedido.numero_pedido }}
+Fecha: {{ pedido.fecha_pedido|date:"d/m/Y H:i" }}
+Estado: {{ pedido.get_estado_display }}
+
+📎 PDF Adjunto: Encontrará el resumen detallado de su pedido en el archivo PDF adjunto a este email.
+
+DATOS DEL CLIENTE:
+------------------
+Nombre: {{ datos_cliente.nombre }}
+Email: {{ datos_cliente.email }}
+{% if datos_cliente.telefono %}Teléfono: {{ datos_cliente.telefono }}{% endif %}
+
+{% if datos_envio %}
+DIRECCIÓN DE ENVÍO:
+-------------------
+Dirección: {{ datos_envio.direccion_completa }}
+{% if datos_envio.telefono %}Teléfono: {{ datos_envio.telefono }}{% endif %}
+
+{% endif %}
+PRODUCTOS:
+----------
+{% for detalle in pedido.detalles.all %}
+- {{ detalle.producto.nombre }}
+  Cantidad: {{ detalle.cantidad }}
+  Precio Unit.: ${{ detalle.precio_unitario|floatformat:2 }}
+  Subtotal: ${{ detalle.subtotal|floatformat:2 }}
+
+{% endfor %}
+TOTAL: ${{ pedido.total_pedido|floatformat:2 }}
+
+=====================================
+Gracias por su compra
+
+Si tiene alguna pregunta, no dude en contactarnos.
+
+Este email fue generado automáticamente el {{ fecha_actual }} 

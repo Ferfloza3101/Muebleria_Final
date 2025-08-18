@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Calidad y Garantía | Umbra Furniture{% endblock %}
+
+{% block extra_css %}
+<style>
+  .section { max-width: 900px; margin: 88px auto 64px; padding: 0 16px; }
+  h1 { font-size: 32px; margin-bottom: 8px; }
+  .muted { color:#666; margin-bottom: 24px; }
+  .list { list-style: none; padding: 0; margin: 0; }
+  .list li { padding: 12px 0; border-bottom: 1px solid #eee; }
+  .badge { display:inline-block; padding: 4px 10px; background:#111; color:#fff; border-radius:999px; font-size:12px; margin-right:8px; }
+  .back-link { display:inline-block; margin-top: 24px; color:#111; text-decoration:none; border-bottom:1px solid #111; }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="section">
+  <h1>Calidad y garantía</h1>
+  <p class="muted">Respaldamos cada producto con estándares rigurosos y una garantía clara.</p>
+  <ul class="list">
+    <li><span class="badge">Materiales</span>Maderas certificadas y telas resistentes al uso diario.</li>
+    <li><span class="badge">Proceso</span>Controles de calidad en cada etapa de fabricación.</li>
+    <li><span class="badge">Garantía</span>Cobertura de 12 meses contra defectos de fábrica.</li>
+    <li><span class="badge">Soporte</span>Atención post-venta dedicada y oportuna.</li>
+  </ul>
+  <a class="back-link" href="{% url 'sobre_nosotros' %}">Volver a Sobre nosotros</a>
+</section>
+{% endblock %}
+
+
+

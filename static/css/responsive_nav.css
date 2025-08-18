@@ -1,0 +1,382 @@
+/* NAVBAR RESPONSIVE - Mejorada */
+
+/* Contenedor principal de la navbar */
+.main-nav .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 0 20px;
+  height: 60px;
+}
+
+/* Sección izquierda */
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-shrink: 0;
+}
+
+/* Logo responsive */
+.logo {
+  max-height: 50px;
+  width: auto;
+  transition: max-height 0.3s ease;
+}
+
+/* Sección central del menú */
+.nav-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-center ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.nav-center ul li a {
+  color: #222;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.nav-center ul li a:hover,
+.nav-center ul li a:focus {
+  background: none;
+  color: #222;
+  border-bottom: 2px solid #856f00;
+  box-shadow: 0 2px 8px rgba(133,111,0,0.08);
+}
+
+/* Sección derecha */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.nav-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  position: relative;
+  cursor: pointer;
+}
+
+.nav-icon:hover {
+  background-color: rgba(133, 111, 0, 0.1);
+}
+
+.nav-icon i {
+  font-size: 16px;
+  color: #222;
+}
+
+/* Iconos que se ocultan durante la búsqueda */
+.nav-icon.search-hidden {
+  opacity: 0;
+  transform: translateX(20px);
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+/* Animación para la búsqueda */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* BREAKPOINTS RESPONSIVE */
+
+/* Tablet grande */
+@media (max-width: 1200px) {
+  .main-nav .container {
+    padding: 0 15px;
+  }
+  
+  .nav-center ul {
+    gap: 12px;
+  }
+  
+  .nav-center ul li a {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+  
+  .logo {
+    max-height: 45px;
+  }
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .main-nav .container {
+    padding: 0 12px;
+  }
+  
+  .nav-center ul {
+    gap: 8px;
+  }
+  
+  .nav-center ul li a {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+  
+  .nav-right {
+    gap: 8px;
+  }
+  
+  .nav-icon {
+    min-width: 36px;
+    height: 36px;
+  }
+  
+  .nav-icon i {
+    font-size: 14px;
+  }
+  
+  .logo {
+    max-height: 40px;
+  }
+}
+
+/* Tablet pequeña */
+@media (max-width: 900px) {
+  .nav-center ul {
+    gap: 6px;
+  }
+  
+  .nav-center ul li a {
+    padding: 4px 8px;
+    font-size: 11px;
+  }
+  
+  .nav-right {
+    gap: 6px;
+  }
+  
+  .nav-icon {
+    min-width: 32px;
+    height: 32px;
+  }
+  
+  .nav-icon i {
+    font-size: 13px;
+  }
+  
+  .logo {
+    max-height: 35px;
+  }
+}
+
+/* Móvil grande - Reorganización */
+@media (max-width: 768px) {
+  .main-nav .container {
+    padding: 0 10px;
+    gap: 8px;
+    flex-wrap: nowrap;
+  }
+  
+  .nav-left {
+    gap: 10px;
+    flex-shrink: 0;
+  }
+  
+  /* Ocultar menú central en móvil */
+  .nav-center {
+    display: none;
+  }
+  
+  .nav-right {
+    gap: 4px;
+    flex-shrink: 0;
+  }
+  
+  .nav-icon {
+    min-width: 32px;
+    height: 32px;
+  }
+  
+  .nav-icon i {
+    font-size: 14px;
+  }
+  
+  .logo {
+    max-height: 32px;
+  }
+  
+  /* Badges más pequeños */
+  .wishlist-badge,
+  .cart-badge {
+    width: 14px;
+    height: 14px;
+    font-size: 9px;
+  }
+}
+
+/* Móvil */
+@media (max-width: 600px) {
+  .main-nav .container {
+    padding: 0 8px;
+    gap: 6px;
+  }
+  
+  .nav-left {
+    gap: 8px;
+  }
+  
+  .nav-right {
+    gap: 3px;
+  }
+  
+  .nav-icon {
+    min-width: 28px;
+    height: 28px;
+  }
+  
+  .nav-icon i {
+    font-size: 12px;
+  }
+  
+  .logo {
+    max-height: 28px;
+  }
+  
+  .wishlist-badge,
+  .cart-badge {
+    width: 12px;
+    height: 12px;
+    font-size: 8px;
+  }
+}
+
+/* Móvil pequeño */
+@media (max-width: 480px) {
+  .main-nav .container {
+    padding: 0 5px;
+    gap: 4px;
+  }
+  
+  .nav-left {
+    gap: 6px;
+  }
+  
+  .nav-right {
+    gap: 2px;
+  }
+  
+  .nav-icon {
+    min-width: 26px;
+    height: 26px;
+  }
+  
+  .nav-icon i {
+    font-size: 11px;
+  }
+  
+  .logo {
+    max-height: 26px;
+  }
+  
+  .wishlist-badge,
+  .cart-badge {
+    width: 10px;
+    height: 10px;
+    font-size: 7px;
+  }
+}
+
+/* Móvil muy pequeño */
+@media (max-width: 360px) {
+  .nav-icon {
+    min-width: 24px;
+    height: 24px;
+  }
+  
+  .nav-icon i {
+    font-size: 10px;
+  }
+  
+  .logo {
+    max-height: 24px;
+  }
+}
+
+/* Dropdowns responsive */
+@media (max-width: 768px) {
+  .dropdown-wishlist,
+  .dropdown-cart,
+  .dropdown-profile {
+    min-width: 280px;
+    max-width: 90vw;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .dropdown-profile {
+    right: 0;
+    left: auto;
+    transform: none;
+  }
+}
+
+/* Mejoras para dispositivos táctiles */
+@media (hover: none) and (pointer: coarse) {
+  .nav-icon {
+    min-width: 44px;
+    height: 44px;
+  }
+  
+  .nav-center ul li a {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+/* Asegurar que el texto no se corte */
+.nav-center ul li a {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 120px;
+}
+
+@media (max-width: 768px) {
+  .nav-center ul li a {
+    max-width: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-center ul li a {
+    max-width: 80px;
+  }
+} 

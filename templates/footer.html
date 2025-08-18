@@ -1,0 +1,44 @@
+{% load static %}
+<footer class="footer">
+    <div class="footer-container">
+        <!-- Primera columna: Umbra Furniture -->
+        <div class="footer-column">
+            <h3>Umbra Furniture</h3>
+            <p class="footer-description">Somos una empresa especializada en la venta de muebles de alta calidad, diseñados para transformar tu espacio en un ambiente elegante y funcional.</p>
+            <p class="footer-contact"><span class="footer-icon">•</span> +1 (555) 123-4567</p>
+            <p class="footer-contact"><span class="footer-icon">•</span> info@umbrafurniture.com</p>
+        </div>
+        
+        <!-- Segunda columna: Apertura -->
+        <div class="footer-column">
+            <h3>Apertura</h3>
+            <p class="footer-description">Estamos abiertos todos los días a todas horas en línea para brindarte la mejor experiencia de compra.</p>
+        </div>
+        
+        <!-- Tercera columna: Sobre nosotros -->
+        <div class="footer-column">
+            <h3>Sobre nosotros</h3>
+            <ul class="footer-list">
+                <li><a href="{% url 'sobre_nosotros_historia' %}"><span class="footer-icon">•</span> Nuestra historia</a></li>
+                <li><a href="{% url 'sobre_nosotros_mision_valores' %}"><span class="footer-icon">•</span> Misión y valores</a></li>
+                <li><a href="{% url 'sobre_nosotros_calidad_garantia' %}"><span class="footer-icon">•</span> Calidad y garantía</a></li>
+                <li><a href="{% url 'sobre_nosotros_sostenibilidad' %}"><span class="footer-icon">•</span> Sostenibilidad</a></li>
+                <li><a href="{% url 'sobre_nosotros_equipo' %}"><span class="footer-icon">•</span> Equipo profesional</a></li>
+            </ul>
+        </div>
+        
+        <!-- Cuarta columna: Cuenta -->
+        <div class="footer-column">
+            <h3>Cuenta</h3>
+            <ul class="footer-list">
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'usuarios:perfil' %}"><span class="footer-icon">•</span> Perfil</a></li>
+                {% else %}
+                    <li><a href="{% url 'login:login' %}"><span class="footer-icon">•</span> Perfil</a></li>
+                {% endif %}
+                <li><a href="{% url 'productos:ver_favoritos' %}"><span class="footer-icon">•</span> Wishlist</a></li>
+                <li><a href="{% url 'productos:ver_carrito' %}"><span class="footer-icon">•</span> Carrito</a></li>
+            </ul>
+        </div>
+    </div>
+</footer> 

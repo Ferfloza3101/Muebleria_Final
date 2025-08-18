@@ -1,0 +1,252 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'usuarios/css/perfil.css' %}">
+{% endblock %}
+
+{% block footer %}{% endblock %}
+
+{% block content %}
+<div class="perfil-layout" id="perfil-root" data-username="{{ user.username }}">
+
+    <nav class="perfil-sidebar" id="perfilSidebar">
+        <ul class="perfil-sidebar__menu">
+            <li>
+                <a href="#info-personal" class="perfil-sidebar__link" data-section="info-personal" data-tooltip="Perfil">
+                    <i class="fas fa-user"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#pedidos" class="perfil-sidebar__link" data-section="pedidos" data-tooltip="Pedidos">
+                    <i class="fas fa-box"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#direcciones" class="perfil-sidebar__link" data-section="direcciones" data-tooltip="Direcciones">
+                    <i class="fas fa-map-marker-alt"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#metodos-pago" class="perfil-sidebar__link" data-section="metodos-pago" data-tooltip="Métodos de Pago">
+                    <i class="fas fa-credit-card"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#seguridad" class="perfil-sidebar__link" data-section="seguridad" data-tooltip="Seguridad">
+                    <i class="fas fa-lock"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#contacto" class="perfil-sidebar__link" data-section="contacto" data-tooltip="Contacto">
+                    <i class="fas fa-headset"></i>
+                </a>
+            </li>
+        </ul>
+        <div class="perfil-sidebar__footer">
+            <a href="/" class="perfil-sidebar__footer-link" data-tooltip="Inicio"><i class="fas fa-home"></i></a>
+            <a href="{% url 'login:logout' %}" class="perfil-sidebar__footer-link perfil-sidebar__footer-link--logout" data-tooltip="Salir"><i class="fas fa-sign-out-alt"></i></a>
+        </div>
+    </nav>
+    <div class="perfil-drawer-overlay" id="perfilDrawerOverlay"></div>
+    <button class="perfil-drawer-toggle" id="perfilDrawerToggle" aria-label="Abrir menú de perfil">
+        <i class="fas fa-bars"></i>
+    </button>
+    <!-- Contenido de mi perfil -->
+    <div class="perfil-content">
+        <div class="perfil-section-view" id="view-info-personal">
+            <h2>Información Personal</h2>
+            {% if mensaje %}
+                <div class="perfil-message perfil-message--success">{{ mensaje }}</div>
+            {% endif %}
+            {% if errores %}
+                <div class="perfil-message perfil-message--error">
+                    {% for field, error_list in errores.items %}
+                        {% for error in error_list %}
+                            <div>{{ error }}</div>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <form id="form-info-personal" method="post">
+                {% csrf_token %}
+                <div class="perfil-form-row">
+                    <label for="id_first_name">Nombre</label>
+                    {{ form_perfil.first_name }}
+                </div>
+                <div class="perfil-form-row">
+                    <label for="id_last_name">Apellidos</label>
+                    {{ form_perfil.last_name }}
+                </div>
+                <div class="perfil-form-row">
+                    <label for="id_email">Correo electrónico</label>
+                    {{ form_perfil.email }}
+                </div>
+                <div class="perfil-form-row">
+                    <label for="id_username">Usuario</label>
+                    {{ form_perfil.username }}
+                </div>
+                <div class="perfil-form-row">
+                    <label for="id_fecha_nacimiento">Fecha de nacimiento</label>
+                    {{ form_perfil.fecha_nacimiento }}
+                </div>
+                <div class="perfil-form-row oculto">
+                    <label for="id_genero">Género</label>
+                    {{ form_perfil.genero }}
+                </div>
+                <div class="perfil-form-row">
+                    <label for="id_telefono">Teléfono</label>
+                    {{ form_perfil.telefono }}
+                </div>
+                <div class="perfil-form-row oculto">
+                    <label for="id_password">Contraseña</label>
+                    {{ form_perfil.password }}
+                    <small class="form-help">{{ form_perfil.password.help_text }}</small>
+                </div>
+                <div class="perfil-form-row oculto">
+                    <label for="id_password_confirm">Confirmar contraseña</label>
+                    {{ form_perfil.password_confirm }}
+                </div>
+                <button type="submit" class="perfil-btn">Guardar Cambios</button>
+            </form>
+        </div>
+        <div class="perfil-section-view" id="view-pedidos">
+            <h2>Historial de Pedidos</h2>
+            <div class="perfil-placeholder" id="pedidos-placeholder">No tienes pedidos aún.</div>
+        </div>
+        <div class="perfil-section-view" id="view-direcciones">
+            <h2>Direcciones y Agenda de Envíos</h2>
+            <div id="direcciones-lista">
+                <div class="perfil-placeholder">No tienes direcciones guardadas.</div>
+            </div>
+            
+            <form id="form-direccion" autocomplete="off">
+                {% csrf_token %}
+                
+                <!-- Campo de búsqueda con autocompletado -->
+                <div class="perfil-form-row">
+                    <label for="id_busqueda_direccion">Buscar dirección</label>
+                    {{ form_direccion.busqueda_direccion }}
+                    <small class="form-help">Escribe tu dirección y selecciona de las sugerencias para autocompletar los campos</small>
+                </div>
+                
+                <!-- Campos de la dirección -->
+                <div class="perfil-form-row">
+                    <label for="id_nombre">Nombre de la dirección</label>
+                    {{ form_direccion.nombre }}
+                </div>
+                
+                <div class="perfil-form-row">
+                    <label for="id_calle">Calle</label>
+                    {{ form_direccion.calle }}
+                </div>
+                
+                <div class="perfil-form-row perfil-form-row--inline">
+                    <div class="perfil-form-col">
+                        <label for="id_numero_exterior">Número exterior</label>
+                        {{ form_direccion.numero_exterior }}
+                    </div>
+                    <div class="perfil-form-col">
+                        <label for="id_numero_interior">Número interior (opcional)</label>
+                        {{ form_direccion.numero_interior }}
+                    </div>
+                </div>
+                
+                <div class="perfil-form-row">
+                    <label for="id_colonia">Colonia</label>
+                    {{ form_direccion.colonia }}
+                </div>
+                
+                <div class="perfil-form-row perfil-form-row--inline">
+                    <div class="perfil-form-col">
+                        <label for="id_ciudad">Ciudad</label>
+                        {{ form_direccion.ciudad }}
+                    </div>
+                    <div class="perfil-form-col">
+                        <label for="id_estado">Estado</label>
+                        {{ form_direccion.estado }}
+                    </div>
+                </div>
+                
+                <div class="perfil-form-row">
+                    <label for="id_codigo_postal">Código Postal</label>
+                    {{ form_direccion.codigo_postal }}
+                </div>
+                
+                <div class="perfil-form-row">
+                    <label for="id_telefono">Teléfono</label>
+                    {{ form_direccion.telefono }}
+                </div>
+                
+                <div class="perfil-form-row">
+                    <label for="id_referencias">Referencias (opcional)</label>
+                    {{ form_direccion.referencias }}
+                </div>
+                
+                <div class="perfil-form-row">
+                    <label for="id_principal" class="perfil-checkbox-label">
+                        {{ form_direccion.principal }}
+                        <span>Marcar como dirección principal</span>
+                    </label>
+                </div>
+                
+                <button type="submit" class="perfil-btn">Agregar Dirección</button>
+            </form>
+            
+            <div id="direccion-exito" class="perfil-placeholder perfil-message perfil-message--success">¡Dirección guardada!</div>
+            <div id="direccion-error" class="perfil-placeholder perfil-message perfil-message--error"></div>
+        </div>
+        <div class="perfil-section-view" id="view-metodos-pago">
+            <h2>Métodos de Pago</h2>
+            <div id="pagos-lista">
+                <div class="perfil-placeholder">No tienes métodos de pago guardados.</div>
+            </div>
+            <form id="form-pago" autocomplete="off">
+                <div class="perfil-form-row">
+                    <label for="pago-nombre">Nombre en la tarjeta</label>
+                    <input type="text" id="pago-nombre" name="nombre" required>
+                </div>
+                <div class="perfil-form-row">
+                    <label for="pago-numero">Número de tarjeta</label>
+                    <div class="perfil-input-with-icon perfil-input-with-icon--cc">
+                        <span id="pago-numero-brand-icon" class="tarjeta-brand-icon" title="Marca">
+                            <i class="far fa-credit-card" aria-hidden="true"></i>
+                        </span>
+                        <input type="text" id="pago-numero" name="numero" maxlength="19" required pattern="[0-9 ]+">
+                    </div>
+                </div>
+                <div class="perfil-form-row">
+                    <label for="pago-vencimiento">Vencimiento (MM/AA)</label>
+                    <input type="text" id="pago-vencimiento" name="vencimiento" maxlength="5" placeholder="MM/AA" required pattern="[0-9/]+">
+                </div>
+                <div class="perfil-form-row">
+                    <label for="pago-cvc">CVC</label>
+                    <input type="text" id="pago-cvc" name="cvc" maxlength="4" required pattern="[0-9]+">
+                </div>
+                <button type="submit" class="perfil-btn">Agregar Método de Pago</button>
+            </form>
+            <div id="pago-exito" class="perfil-placeholder perfil-message perfil-message--success">¡Método de pago guardado!</div>
+            <div id="pago-error" class="perfil-placeholder perfil-message perfil-message--error" style="display:none;"></div>
+        </div>
+        <div class="perfil-section-view" id="view-seguridad">
+            <h2>Seguridad y Privacidad</h2>
+            <a href="/usuarios/cambiar_contrasena/" class="perfil-btn perfil-btn--secundario">Cambiar contraseña</a>
+        </div>
+        <div class="perfil-section-view" id="view-contacto">
+            <h2>Contacto</h2>
+            <div class="perfil-contacto">
+                <div><strong>Umbra</strong></div>
+                <div>Tel: <a href="tel:+521234567890">+52 123 456 7890</a></div>
+                <div>Email: <a href="mailto:umbra@umbramuebles.com">umbra@umbramuebles.com</a></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'usuarios/js/perfil.js' %}"></script>
+<!-- Google Maps Places API para autocompletado -->
+<script src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_API_KEY }}&libraries=places"></script>
+<script src="{% static 'usuarios/js/direcciones.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ producto.nombre }} | Detalle{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'productos/css/detalle_producto.css' %}">
+{% endblock %}
+{% block content %}
+<div class="product-card product-card-detalle" data-product-id="{{ producto.id }}"
+     data-imagenes='[{% for img in imagenes %}{% if not forloop.first %},{% endif %}"{{ img.imagen.url }}"{% endfor %}]'
+     data-imagen-principal="{{ producto.imagen_principal.url }}">
+  <div class="product-image-wrapper">
+    <button class="detalle-arrow prev-arrow js-prev-img"><i class="fas fa-chevron-left"></i></button>
+    <img id="detalle-imagen" src="{% if imagenes and imagenes.0 %}{{ imagenes.0.imagen.url }}{% else %}{{ producto.imagen_principal.url }}{% endif %}" alt="{{ producto.nombre }}" class="product-image">
+    <button class="detalle-arrow next-arrow js-next-img"><i class="fas fa-chevron-right"></i></button>
+  </div>
+  <div class="image-dots">
+    {% for img in imagenes %}
+      <span class="dot{% if forloop.first %} active{% endif %} js-dot" data-index="{{ forloop.counter0 }}"></span>
+    {% empty %}
+      <span class="dot active"></span>
+    {% endfor %}
+  </div>
+  <h3 class="product-name">{{ producto.nombre }}</h3>
+  <p class="product-category">{{ producto.categoria.nombre }}</p>
+  <div class="product-description">{{ producto.descripcion|linebreaks }}</div>
+  <div class="product-pricing">
+    {% if producto.oferta_activa and producto.precio_oferta and producto.precio_oferta < producto.precio %}
+      <span class="original-price">${{ producto.precio|floatformat:2 }}</span>
+      <span class="sale-price">${{ producto.precio_oferta|floatformat:2 }}</span>
+    {% else %}
+      <span class="price">${{ producto.precio|floatformat:2 }}</span>
+    {% endif %}
+  </div>
+  <div class="product-stock">Stock disponible: <b id="stock-detalle">{{ stock }}</b></div>
+  <div class="detalle-cantidad">
+    <label for="cantidad-detalle-{{ producto.id }}">Cantidad:</label>
+    <input type="number" id="cantidad-detalle-{{ producto.id }}" class="input-cantidad" min="1" max="{{ stock }}" value="1" {% if stock == 0 %}disabled{% endif %}>
+  </div>
+  <div class="detalle-acciones-bajo">
+    <button class="action-btn wishlist-btn btn-negro-blanco{% if wishlist_ids and producto.id in wishlist_ids %} active{% endif %}" data-product-id="{{ producto.id }}" title="Agregar a favoritos">
+      <i class="fa{% if wishlist_ids and producto.id in wishlist_ids %}s{% else %}r{% endif %} fa-heart"></i>
+      Favoritos
+    </button>
+    <button class="action-btn cart-btn btn-negro-blanco" id="btn-agregar-carrito" data-product-id="{{ producto.id }}" title="Agregar al carrito" {% if stock == 0 %}disabled{% endif %}>
+      <i class="fas fa-shopping-cart"></i>
+      Agregar al carrito
+    </button>
+  </div>
+  <div id="mensaje-detalle" class="mensaje-detalle"></div>
+  {% if stock == 0 %}
+    <div class="mensaje-detalle mensaje-sin-stock">No hay stock disponible</div>
+  {% endif %}
+</div>
+{% block extra_js %}
+<script src="{% static 'productos/js/galeria_imagenes.js' %}"></script>
+<script src="{% static 'productos/js/detalle_producto.js' %}"></script>
+{% endblock %}
+{% endblock %}

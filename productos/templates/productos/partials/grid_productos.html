@@ -1,0 +1,10 @@
+<div class="products-grid">
+    {% for producto in productos %}
+        {% include 'productos/tarjeta_producto.html' with producto=producto wishlist_ids=wishlist_ids %}
+    {% empty %}
+        <p class="no-products">No hay productos disponibles.</p>
+    {% endfor %}
+</div><!-- Modales de productos -->
+{% for producto in productos %}
+    {% include 'forms/modal_base.html' with producto=producto wishlist_ids=wishlist_ids %}
+{% endfor %} 

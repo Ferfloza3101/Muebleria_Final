@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Cambiar contraseña</title>
+    <link rel="stylesheet" href="{% static 'usuarios/css/cambiar_contrasena.css' %}">
+</head>
+<body>
+    <div class="cambiar-contrasena-container">
+        <h1>Cambiar contraseña</h1>
+        <p class="cambiar-contrasena-instrucciones">
+            Para tu seguridad, elige una contraseña que cumpla con las siguientes reglas:<br>
+            <ul>
+                <li>Mínimo 8 caracteres</li>
+                <li>Al menos una letra mayúscula</li>
+                <li>Al menos un carácter especial (ej: !@#$%)</li>
+                <li>No puede ser igual a la anterior</li>
+            </ul>
+        </p>
+        {% if errores %}
+            <div class="cambiar-contrasena-errores">
+                <ul>
+                {% for error in errores %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        {% if exito %}
+            <div class="cambiar-contrasena-exito">¡Contraseña cambiada exitosamente!</div>
+        {% endif %}
+        <form method="post" class="cambiar-contrasena-form" id="cambiarContrasenaForm" autocomplete="off">
+            {% csrf_token %}
+            <div class="form-row">
+                <label for="actual">Contraseña actual</label>
+                <input type="password" id="actual" name="actual" required autocomplete="current-password">
+            </div>
+            <div class="form-row">
+                <label for="nueva">Nueva contraseña</label>
+                <input type="password" id="nueva" name="nueva" required autocomplete="new-password">
+                <div class="cambiar-contrasena-feedback" id="nuevaFeedback"></div>
+            </div>
+            <div class="form-row">
+                <label for="confirmar">Confirmar nueva contraseña</label>
+                <input type="password" id="confirmar" name="confirmar" required autocomplete="new-password">
+                <div class="cambiar-contrasena-feedback" id="confirmarFeedback"></div>
+            </div>
+            <button type="submit" class="cambiar-contrasena-btn">Cambiar contraseña</button>
+        </form>
+        <div class="cambiar-contrasena-links">
+            <a href="/usuarios/">Volver a mi perfil</a>
+        </div>
+    </div>
+    <script src="{% static 'usuarios/js/cambiar_contrasena.js' %}"></script>
+</body>
+</html> 

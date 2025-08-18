@@ -1,0 +1,137 @@
+/*
+Contiene los estilos para la barra de navegación, el menú de favoritos (wishlist) y el carrito de compras, incluyendo dropdowns y badges.
+*/
+
+.nav-fav-dropdown { position: relative; display: inline-block; }
+.dropdown-wishlist {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ffffff;
+  min-width: 260px;
+  box-shadow: 0 8px 24px #26262626;
+  border-radius: 8px;
+  z-index: 2000;
+  padding: 10px 0;
+  margin-top: 8px;
+}
+.nav-fav-dropdown:hover .dropdown-wishlist,
+.nav-fav-dropdown.active .dropdown-wishlist,
+.nav-fav-dropdown:focus-within .dropdown-wishlist {
+  display: block;
+}
+.wishlist-list { max-height: 320px; overflow-y: auto; }
+.wishlist-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  text-decoration: none;
+  color: #333333;
+  transition: background 0.2s;
+}
+.wishlist-item:hover, .wishlist-item:focus {
+  background: #f5f5f5;
+  outline: none;
+}
+.wishlist-thumb {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-right: 12px;
+}
+.wishlist-title { flex: 1; font-size: 15px; color: #222222; }
+.wishlist-price { font-weight: bold; color: #111111; margin-left: 8px; }
+.wishlist-empty { padding: 16px; text-align: center; color: #888888; }
+.nav-fav-dropdown:focus-within .dropdown-wishlist { display: block; }
+.nav-fav-dropdown .dropdown-wishlist a { cursor: pointer; }
+.wishlist-badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background: #222222;
+  color: #ffffff;
+  font-size: 9px;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  pointer-events: none;
+  box-shadow: 0 1px 4px #0000001a;
+  transition: opacity 0.2s, width 0.2s, height 0.2s, font-size 0.2s;
+}
+.nav-cart-dropdown { position: relative; display: inline-block; }
+.dropdown-cart {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ffffff;
+  min-width: 320px;
+  box-shadow: 0 8px 24px #26262626;
+  border-radius: 8px;
+  z-index: 2000;
+  padding: 10px 0;
+  margin-top: 8px;
+}
+.nav-cart-dropdown:hover .dropdown-cart,
+.nav-cart-dropdown.active .dropdown-cart,
+.nav-cart-dropdown:focus-within .dropdown-cart {
+  display: block;
+}
+.cart-badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background: #222222;
+  color: #ffffff;
+  font-size: 9px;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  pointer-events: none;
+  box-shadow: 0 1px 4px #0000001a;
+  transition: opacity 0.2s, width 0.2s, height 0.2s, font-size 0.2s;
+}
+.wishlist-list i.fa-heart {
+  color: #111111 !important;
+  transition: color 0.2s;
+}
+.wishlist-list .wishlist-item:hover i.fa-heart {
+  color: #111111 !important;
+}
+.wishlist-list i.fa-shopping-cart {
+  color: #111111 !important;
+  transition: color 0.2s;
+}
+.wishlist-list .wishlist-item:hover i.fa-shopping-cart {
+  color: #111111 !important;
+}
+.main-nav .nav-center ul li a {
+  color: #222222;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: box-shadow 0.18s, text-shadow 0.18s, border-bottom 0.18s;
+  border-bottom: 2px solid transparent;
+}
+.main-nav .nav-center ul li a:hover,
+.main-nav .nav-center ul li a:focus {
+  background: none;
+  color: #222222;
+  border-bottom: 2px solid #f5f4ee1a;
+  box-shadow: 0 2px 8px #8882;
+  text-shadow: 0 1px 2px #1111;
+} 

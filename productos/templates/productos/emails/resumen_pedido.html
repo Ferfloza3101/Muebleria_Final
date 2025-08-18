@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmación de Pedido</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #007bff;
+            margin: 0;
+            font-size: 24px;
+        }
+        .success-message {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #155724;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Mueblería OPTI</h1>
+            <p>Confirmación de Pedido</p>
+        </div>
+        <div class="success-message">
+            <strong>¡Su pedido ha sido confirmado!</strong><br>
+            Hemos recibido su pedido y lo estamos procesando.<br>
+            Adjuntamos el resumen de su pedido en formato PDF.
+        </div>
+        <div class="footer">
+            <p><strong>Gracias por su compra</strong></p>
+            <p>Si tiene alguna pregunta, no dude en contactarnos.</p>
+            <p>Este email fue generado automáticamente el {{ fecha_actual }}</p>
+        </div>
+    </div>
+</body>
+</html> 

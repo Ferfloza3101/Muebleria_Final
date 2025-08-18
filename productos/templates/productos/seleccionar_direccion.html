@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Seleccionar dirección de envío</title>
+    <link rel="stylesheet" href="{% static 'productos/css/checkout.css' %}">
+</head>
+<body>
+<div class="checkout-container">
+    <h1 class="checkout-title">Selecciona una dirección de envío</h1>
+    <div class="direccion-lista">
+        {% for direccion in direcciones %}
+        <div class="direccion-item{% if direccion_seleccionada_id and direccion.id == direccion_seleccionada_id %} direccion-item--nueva{% endif %}">
+            <input type="radio" name="direccion" value="{{ direccion.id }}" id="dir{{ direccion.id }}" {% if direccion_seleccionada_id and direccion.id == direccion_seleccionada_id %}checked{% elif forloop.first %}checked{% endif %}>
+            <label for="dir{{ direccion.id }}">
+                <div class="direccion-nombre">{{ direccion.nombre }}</div>
+                <div class="direccion-detalle">{{ direccion.get_direccion_completa }}</div>
+                <div class="direccion-telefono">Tel: {{ direccion.telefono }}</div>
+            </label>
+        </div>
+        {% empty %}
+        <div class="checkout-vacio">No tienes direcciones guardadas.</div>
+        {% endfor %}
+    </div>
+    <div class="checkout-acciones">
+        <a href="/productos/carrito/agregar-direccion/" class="checkout-btn-pagar">Agregar nueva dirección</a>
+        <button class="checkout-btn-pagar" id="continuarDireccion">Continuar</button>
+    </div>
+    <div class="checkout-links">
+        <a href="/productos/carrito/">Volver al carrito</a>
+    </div>
+</div>
+<script src="{% static 'productos/js/seleccionar_direccion.js' %}"></script>
+</body>
+</html> 

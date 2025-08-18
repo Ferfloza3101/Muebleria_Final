@@ -1,0 +1,211 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="csrf-token" content="{{ csrf_token }}">
+  <title>{% block title %}Mueblería en Línea{% endblock %}</title>
+  
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Anton%7CBaskervville%7CRaleway&display=swap"
+    rel="stylesheet"/>
+  
+  <!-- FontAwesome 5.8.1 -->
+  <link
+    rel="stylesheet"
+    href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+    crossorigin="anonymous"/>
+  
+  <!-- Estilos principales -->
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  
+  <!-- Estilos responsive para la navbar -->
+  <link rel="stylesheet" href="{% static 'css/responsive_nav.css' %}">
+  
+  <!-- Estilos del footer -->
+  <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+  
+  <!-- Estilos adicionales específicos -->
+  {% block extra_css %}{% endblock %}
+  <link rel="stylesheet" href="{% static 'css/home_products_grid.css' %}">
+</head>
+<body>
+  <!-- Barra de navegación fija -->
+  <nav class="main-nav">
+    <!-- Contenedor centrado -->
+    <div class="container">
+      <!-- Sección izquierda: Logo -->
+      <div class="nav-left">
+        <a href="{% url 'home' %}">
+          <img src="{% static 'ASSETS/logo.png' %}" alt="Logo" class="logo">
+        </a>
+      </div>
+    
+      <!-- Sección central: Menú -->
+      <div class="nav-center">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="{% url 'productos:lista_productos' %}">Products</a></li>
+          <li><a href="{% url 'productos:lista_por_categoria' 'accesorios' %}">Accessories</a></li>
+          <li>
+            {% if user.is_authenticated %}
+              <a href="{% url 'usuarios:perfil' %}">Perfil</a>
+            {% else %}
+              <a href="{% url 'login:login' %}">Perfil</a>
+            {% endif %}
+          </li>
+          <li><a href="{% url 'blog:listado_blog' %}">Blog</a></li>
+          <li>
+            {% if user.is_authenticated %}
+              <a href="{% url 'usuarios:perfil' %}#contacto">Contact</a>
+            {% else %}
+              <a href="{% url 'login:login' %}">Contact</a>
+            {% endif %}
+          </li>
+        </ul>
+      </div>
+      
+      <!-- Sección derecha: Iconos -->
+      <div class="nav-right">
+        <a href="#" class="nav-icon search-toggle" aria-label="Buscar productos">
+          <i class="fas fa-search"></i>
+        </a>
+        
+        <!-- Formulario de búsqueda inline, a la derecha del icono -->
+        <form class="search-form" action="{% url 'productos:lista_productos' %}" method="get">
+          <input type="text" name="q" placeholder="Buscar productos..." class="search-input" required>
+          <button type="submit" class="search-submit">
+            <i class="fas fa-search"></i>
+          </button>
+        </form>
+        
+        <!-- Dropdown de favoritos -->
+        <div class="nav-icon nav-fav-dropdown hide-on-search" id="wishlistDropdown">
+          <i class="fas fa-heart" aria-label="Favoritos"></i>
+          <span id="wishlist-badge" class="wishlist-badge oculto">
+            {% if wishlist_menu and wishlist_menu.productos.exists %}{{ wishlist_menu.productos.count }}{% endif %}
+          </span>
+          <div class="dropdown-menu dropdown-wishlist">
+            {% if user.is_authenticated and wishlist_menu and wishlist_menu.productos.exists %}
+              <div class="wishlist-list">
+                {% for producto in wishlist_menu.productos.all %}
+                  <a href="{% url 'productos:detalle_producto' producto.id %}" class="wishlist-item">
+                    <img src="{{ producto.imagen_principal.url }}" alt="{{ producto.nombre }}" class="wishlist-thumb">
+                    <span class="wishlist-title">{{ producto.nombre }}</span>
+                    <span class="wishlist-price">${{ producto.precio_actual|floatformat:2 }}</span>
+                  </a>
+                {% endfor %}
+              </div>
+            {% else %}
+              <div class="wishlist-empty">No tienes favoritos aún.</div>
+            {% endif %}
+          </div>
+        </div>
+        
+        <!-- Dropdown del carrito -->
+        <div class="nav-icon nav-cart-dropdown hide-on-search" id="cartDropdown">
+          <i class="fas fa-shopping-cart" aria-label="Carrito de compras"></i>
+          <span id="cart-badge" class="cart-badge cart-count oculto">0</span>
+          <div class="dropdown-menu dropdown-cart"></div>
+        </div>
+        
+        <!-- Dropdown del perfil -->
+        <div class="nav-icon nav-profile-dropdown hide-on-search" id="profileDropdown">
+          <i class="fas fa-user" aria-label="Perfil de usuario"></i>
+          <div class="dropdown-menu dropdown-profile">
+            {% if user.is_authenticated %}
+              <!-- Usuario logueado -->
+              <div class="profile-header">
+                <div class="profile-avatar">
+                  <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="profile-info">
+                  <span class="profile-name">{{ user.username }}</span>
+                  <span class="profile-email">{{ user.email|default:"Sin email" }}</span>
+                </div>
+              </div>
+              <div class="profile-menu">
+                <a href="{% url 'usuarios:perfil' %}" class="profile-menu-item">
+                  <i class="fas fa-user"></i>
+                  <span>Mi Perfil</span>
+                </a>
+                <a href="{% url 'productos:ver_favoritos' %}" class="profile-menu-item">
+                  <i class="fas fa-heart"></i>
+                  <span>Mis Favoritos</span>
+                </a>
+                <a href="{% url 'productos:ver_carrito' %}" class="profile-menu-item">
+                  <i class="fas fa-shopping-cart"></i>
+                  <span>Mi Carrito</span>
+                </a>
+                <div class="profile-divider"></div>
+                <a href="{% url 'login:logout' %}" class="profile-menu-item logout-item">
+                  <i class="fas fa-sign-out-alt"></i>
+                  <span>Cerrar Sesión</span>
+                </a>
+              </div>
+            {% else %}
+              <!-- Usuario no logueado -->
+              <div class="profile-menu">
+                <a href="{% url 'login:login' %}" class="profile-menu-item">
+                  <i class="fas fa-sign-in-alt"></i>
+                  <span>Iniciar Sesión</span>
+                </a>
+                <a href="{% url 'login:registro' %}" class="profile-menu-item">
+                  <i class="fas fa-user-plus"></i>
+                  <span>Registrarse</span>
+                </a>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  {% block nav %}{% endblock %}
+  
+  <main>
+      {% block content %}
+      {% endblock %}
+  </main>
+  
+  <!-- Footer -->
+  {% block footer %}
+    {% include 'footer.html' %}
+  {% endblock %}
+  
+  <!-- Modal único para productos -->
+  <div id="product-modal" class="product-modal" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal-content">
+      <button type="button" class="close-modal" aria-label="Cerrar modal">&times;</button>
+      <div class="modal-product-details">
+        <!-- El contenido se cargará dinámicamente -->
+        <div class="loading-spinner oculto">
+          <i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Cargando...
+        </div>
+        <div class="modal-content-wrapper"></div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Scripts principales -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" defer></script>
+  
+  <!-- Configuración y utilidades -->
+  <script src="{% static 'js/config.js' %}" defer></script>
+  
+  <!-- Scripts de la aplicación -->
+  <script src="{% static 'js/main.js' %}" defer></script>
+  <script src="{% static 'js/base.js' %}" defer></script>
+  <script src="{% static 'js/components.js' %}" defer></script>
+  <script src="{% static 'JS/nav.js' %}" defer></script>
+  <script src="{% static 'productos/js/nav_cart_wishlist.js' %}" defer></script>
+  <script src="{% static 'productos/js/modal.js' %}" defer></script>
+  <script src="{% static 'productos/js/modal_producto.js' %}" defer></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

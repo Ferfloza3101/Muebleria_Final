@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{ blog.titulo }} | Blog{% endblock %}
+{% block content %}
+<div class="blog-detalle-section">
+    <div class="blog-detalle-card">
+        {% if blog.imagen %}
+            <img src="{{ blog.imagen.url }}" alt="{{ blog.titulo }}" class="blog-detalle-img">
+        {% endif %}
+        <h2 class="blog-detalle-title">{{ blog.titulo }}</h2>
+        <div class="blog-detalle-meta">
+            <span class="blog-detalle-autor">Por {{ blog.autor.username }}</span>
+            <span class="blog-detalle-fecha">{{ blog.fecha_creacion|date:'d M Y' }}</span>
+        </div>
+        <div class="blog-detalle-contenido">{{ blog.contenido|linebreaks }}</div>
+        <div class="blog-detalle-likes">
+            {% if user.is_authenticated %}
+            <form method="post" action="{% url 'blog:like_blog' blog.id %}" class="like-form">{% csrf_token %}
+                <button type="submit" class="like-btn">
+                    <i class="{% if liked_by_user %}fas{% else %}far{% endif %} fa-thumbs-up"></i>
+                </button>
+                <span class="like-count">{{ blog.num_likes }}</span>
+            </form>
+            {% else %}
+            <button class="like-btn" disabled><i class="far fa-thumbs-up"></i></button>
+            <span class="like-count">{{ blog.num_likes }}</span>
+            {% endif %}
+        </div>
+    </div>
+    <div class="blog-comentarios-section" id="comentarios">
+        <h3>Comentarios</h3>
+        {% if user.is_authenticated %}
+        <form method="post" class="comentario-form">
+            {% csrf_token %}
+            <textarea name="comentario" rows="3" placeholder="Escribe tu comentario..." required></textarea>
+            <button type="submit">Comentar</button>
+        </form>
+        {% else %}
+        <div class="comentario-login-msg">Inicia sesión para comentar.</div>
+        {% endif %}
+        <div class="comentarios-lista">
+            {% for comentario in comentarios %}
+                <div class="comentario-item">
+                    <span class="comentario-autor">{{ comentario.usuario.username }}</span>
+                    <span class="comentario-fecha">{{ comentario.fecha|date:'d M Y H:i' }}</span>
+                    <div class="comentario-texto">{{ comentario.texto|linebreaks }}</div>
+                </div>
+            {% empty %}
+                <div class="comentario-empty">Sé el primero en comentar.</div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/blog.css' %}">
+{% endblock %}
+{% block extra_js %}
+<script src="{% static 'js/blog.js' %}"></script>
+{% endblock %}

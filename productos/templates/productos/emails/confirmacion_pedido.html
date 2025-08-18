@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmación de Pedido</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #28a745;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #28a745;
+            margin: 0;
+            font-size: 24px;
+        }
+        .success-message {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #155724;
+        }
+        .order-info {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        .order-number {
+            font-size: 18px;
+            font-weight: bold;
+            color: #28a745;
+            margin-bottom: 10px;
+        }
+        .customer-info, .shipping-info {
+            margin-bottom: 25px;
+        }
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+        }
+        .info-row {
+            margin-bottom: 8px;
+        }
+        .info-label {
+            font-weight: bold;
+            color: #555;
+        }
+        .products-summary {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 25px;
+        }
+        .product-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: white;
+            border-radius: 3px;
+            border-left: 3px solid #28a745;
+        }
+        .total-section {
+            text-align: right;
+            font-size: 18px;
+            font-weight: bold;
+            color: #28a745;
+            border-top: 2px solid #28a745;
+            padding-top: 15px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #666;
+            font-size: 14px;
+        }
+        .next-steps {
+            background-color: #e7f3ff;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .next-steps h3 {
+            color: #007bff;
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Mueblería OPTI</h1>
+            <p>Confirmación de Pedido</p>
+        </div>
+
+        <div class="success-message">
+            <strong>✅ ¡Su pedido ha sido confirmado!</strong><br>
+            Hemos recibido su pedido y lo estamos procesando.
+        </div>
+
+        <div class="order-info">
+            <div class="order-number">Pedido #{{ pedido.numero_pedido }}</div>
+            <div class="info-row">
+                <span class="info-label">Fecha:</span> {{ pedido.fecha_pedido|date:"d/m/Y H:i" }}
+            </div>
+            <div class="info-row">
+                <span class="info-label">Estado:</span> {{ pedido.get_estado_display }}
+            </div>
+        </div>
+
+        <div class="customer-info">
+            <div class="section-title">Datos del Cliente</div>
+            <div class="info-row">
+                <span class="info-label">Nombre:</span> {{ datos_cliente.nombre }}
+            </div>
+            <div class="info-row">
+                <span class="info-label">Email:</span> {{ datos_cliente.email }}
+            </div>
+            {% if datos_cliente.telefono %}
+            <div class="info-row">
+                <span class="info-label">Teléfono:</span> {{ datos_cliente.telefono }}
+            </div>
+            {% endif %}
+        </div>
+
+        {% if datos_envio %}
+        <div class="shipping-info">
+            <div class="section-title">Dirección de Envío</div>
+            <div class="info-row">
+                <span class="info-label">Dirección:</span> {{ datos_envio.direccion_completa }}
+            </div>
+            {% if datos_envio.telefono %}
+            <div class="info-row">
+                <span class="info-label">Teléfono:</span> {{ datos_envio.telefono }}
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <div class="section-title">Resumen de Productos</div>
+        <div class="products-summary">
+            {% for detalle in pedido.detalles.all %}
+            <div class="product-item">
+                <strong>{{ detalle.producto.nombre }}</strong><br>
+                Cantidad: {{ detalle.cantidad }} | Precio: ${{ detalle.precio_unitario|floatformat:2 }} | Subtotal: ${{ detalle.subtotal|floatformat:2 }}
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="total-section">
+            <div class="info-row">
+                <span class="info-label">Total:</span> ${{ pedido.total_pedido|floatformat:2 }}
+            </div>
+        </div>
+
+        <div class="next-steps">
+            <h3>Próximos Pasos</h3>
+            <ul>
+                <li>Recibirá una notificación cuando su pedido esté siendo procesado</li>
+                <li>Le enviaremos el número de seguimiento cuando el pedido sea enviado</li>
+                <li>Puede contactarnos en cualquier momento si tiene preguntas</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <p><strong>Gracias por su compra</strong></p>
+            <p>Si tiene alguna pregunta, no dude en contactarnos.</p>
+            <p>Este email fue generado automáticamente el {{ fecha_actual }}</p>
+        </div>
+    </div>
+</body>
+</html> 

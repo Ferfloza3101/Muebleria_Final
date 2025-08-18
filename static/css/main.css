@@ -1,0 +1,88 @@
+/* 
+ * main.css
+ * Este es el archivo principal de estilos del proyecto.
+ * Aquí se importan y organizan todos los estilos globales y específicos necesarios
+ * para la correcta visualización y funcionamiento de la aplicación.
+ */
+
+/* Estilos base y generales */
+@import url('styles.css');
+
+/* Estilos específicos del template base */
+@import url('base.css');
+
+/* Estilos de productos */
+@import url('products.css');
+
+/* Estilos de notificaciones */
+@import url('notifications.css');
+
+/* Componentes globales reutilizables */
+@import url('components.css');
+
+/* Estilos específicos de productos */
+@import url('../productos/css/nav_cart_wishlist.css');
+@import url('../productos/css/mensaje_carrito.css');
+@import url('../productos/css/carrito_menu.css');
+@import url('../productos/css/detalle_producto.css');
+@import url('../productos/css/favoritos.css');
+@import url('../productos/css/wishlist_menu.css');
+@import url('../productos/css/carrusel.css');
+@import url('../productos/css/detalle_producto_modal.css');
+@import url('../productos/css/tarjeta_producto.css');
+@import url('../productos/css/profile_menu.css');
+
+/* Variables CSS globales */
+:root {
+  --primary-color: #222;
+  --secondary-color: #222;
+  --accent-color: #f5f5f5;
+  --text-color: #333;
+  --light-text: #888;
+  --border-color: #ddd;
+  --shadow-light: rgba(0,0,0,0.1);
+  --shadow-medium: rgba(0,0,0,0.15);
+  --transition-fast: 0.2s;
+  --transition-medium: 0.3s;
+  --border-radius: 8px;
+  --border-radius-small: 4px;
+}
+
+/* Optimizaciones globales */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Raleway', sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .nav-fav-dropdown:hover .dropdown-wishlist,
+  .nav-cart-dropdown:hover .dropdown-cart {
+    display: none;
+  }
+  
+  .nav-fav-dropdown.active .dropdown-wishlist,
+  .nav-cart-dropdown.active .dropdown-cart {
+    display: block;
+  }
+} 

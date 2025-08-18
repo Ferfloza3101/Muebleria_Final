@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Pago Exitoso - Mueblería OPTI{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'productos/css/pagos.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body text-center">
+                    <div class="mb-4">
+                        <i class="fas fa-check-circle text-success pago-icon-xl"></i>
+                    </div>
+                    
+                    <h2 class="text-success mb-3">¡Pago Exitoso!</h2>
+                    <p class="lead">Su pago ha sido procesado correctamente.</p>
+                    
+                    {% if payment_id %}
+                    <div class="alert alert-info">
+                        <strong>ID de Pago:</strong> {{ payment_id }}
+                    </div>
+                    {% endif %}
+                    
+                    {% if pedido_creado %}
+                    <div class="alert alert-success">
+                        <h5>✅ Pedido Creado Exitosamente</h5>
+                        <p>Su pedido ha sido procesado y recibirá un email de confirmación con los detalles.</p>
+                    </div>
+                    {% endif %}
+                    
+                    {% if error %}
+                    <div class="alert alert-warning">
+                        <h5>⚠️ Nota Importante</h5>
+                        <p>{{ error }}</p>
+                        <p>Su pago fue exitoso, pero hubo un problema procesando el pedido. Por favor contacte al soporte.</p>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="mt-4">
+                        <p>Recibirá un email de confirmación con los detalles de su pedido.</p>
+                        <p>Puede revisar el estado de su pedido en su perfil de usuario.</p>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <a href="{% url 'usuarios:perfil' %}#pedidos" class="btn btn-primary btn-lg">
+                            Ver Mis Pedidos
+                        </a>
+                        <a href="{% url 'productos:lista_productos' %}" class="btn btn-outline-secondary btn-lg ml-2">
+                            Seguir Comprando
+                        </a>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <p class="text-muted">
+                            Si no recibe el email de confirmación en los próximos minutos, 
+                            revise su carpeta de spam o contacte nuestro servicio al cliente.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

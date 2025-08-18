@@ -1,0 +1,85 @@
+/*
+ Estilos para el menú desplegable de favoritos (wishlist), incluyendo la lista de productos y botones de acción.
+*/
+
+.wishlist-item-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+}
+.wishlist-remove-btn, .wishlist-cart-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 6px;
+  color: #555;
+  font-size: 18px;
+  transition: color 0.2s;
+}
+
+.dropdown-wishlist {
+  min-width: 320px !important;
+  max-width: 400px;
+  width: 100%;
+}
+.wishlist-list {
+  max-height: 320px;
+  overflow-y: auto;
+  min-width: 320px;
+  max-width: 400px;
+  width: 100%;
+}
+.wishlist-item {
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+.wishlist-thumb {
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-right: 8px;
+}
+.wishlist-title {
+  flex: 1 1 auto;
+  font-size: 13px;
+  color: #222;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.wishlist-price {
+  font-weight: bold;
+  color: #111;
+  margin-left: 6px;
+  font-size: 13px;
+}
+.wishlist-item-row .wishlist-actions {
+  display: flex;
+  gap: 2px;
+  margin-left: auto;
+  align-items: center;
+}
+.wishlist-item-link {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+.wishlist-item-link:visited,
+.wishlist-item-link:active,
+.wishlist-item-link:focus {
+  text-decoration: none;
+  color: inherit;
+}
+.wishlist-item-link:hover {
+  background: #f5f5f5;
+  text-decoration: none;
+  color: inherit;
+}

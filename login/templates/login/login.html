@@ -1,0 +1,24 @@
+{% extends 'forms/base_form.html' %}
+{% load static %}
+
+{% block form_title %}Iniciar Sesión{% endblock %}
+{% block form_heading %}Iniciar Sesión{% endblock %}
+{% block form_button_class %}secondary{% endblock %}
+{% block form_button_text %}Iniciar Sesión{% endblock %}
+
+{% block form_content %}
+<div class="form-group">
+    <label for="username" class="form-label">Usuario</label>
+    <input type="text" name="username" id="username" class="form-input" required>
+</div>
+
+<div class="form-group">
+    <label for="password" class="form-label">Contraseña</label>
+    <input type="password" name="password" id="password" class="form-input" required>
+</div>
+{% endblock %}
+
+{% block form_links %}
+<a href="{% url 'login:registro' %}" class="form-link">¿No tienes cuenta? Regístrate aquí</a>
+<a href="{% url 'home' %}" class="form-link">Volver al inicio</a>
+{% endblock %}

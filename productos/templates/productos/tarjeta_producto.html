@@ -1,0 +1,49 @@
+{# Tarjeta simple de producto #}
+
+{% load static %}
+
+<!-- Tarjeta de producto clickeable -->
+<div class="product-card open-modal-btn" 
+     data-product-id="{{ producto.id }}"
+     data-images='[{% if producto.imagenes.all|length > 0 %}{% for img in producto.imagenes.all %}{% if not forloop.first %},{% endif %}{"url":"{{ img.imagen.url }}"}{% endfor %}{% else %}{"url":"{{ producto.imagen_principal.url }}"}{% endif %}]'>
+    <!-- Nombre y categoría -->
+    <h3 class="product-name">{{ producto.nombre }}</h3>
+    <p class="product-category">{{ producto.categoria.nombre }}</p>
+    
+    <!-- Galería de imágenes con flechas -->
+    <div class="product-image-wrapper">
+        <i class="fas fa-chevron-left nav-arrow prev-arrow"></i>
+        <img src="{{ producto.imagen_principal.url }}"
+             alt="{{ producto.nombre }}"
+             class="product-image"
+             data-images='[{"url":"{{ producto.imagen_principal.url }}"}{% for img in producto.imagenes.all %}{% if img.imagen.url != producto.imagen_principal.url %}, {"url":"{{ img.imagen.url }}"}{% endif %}{% endfor %}]'
+             data-current-image="0">
+        <i class="fas fa-chevron-right nav-arrow next-arrow"></i>
+        <!-- Grupo de iconos vertical -->
+        <div class="icon-group js-stop-propagation">
+            <button class="action-btn wishlist-btn{% if wishlist_ids and producto.id in wishlist_ids %} active{% endif %}" data-product-id="{{ producto.id }}" title="Agregar a favoritos">
+                <i class="fa{% if wishlist_ids and producto.id in wishlist_ids %}s{% else %}r{% endif %} fa-heart"></i>
+            </button>
+            <button class="action-btn cart-btn" data-product-id="{{ producto.id }}" data-action="add-cart" title="Agregar al carrito" type="button" class="js-stop-propagation">
+                <i class="fas fa-shopping-cart"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Dots indicadores de imagen -->
+    <div class="image-dots"></div>
+
+    <!-- Precios -->
+    <div class="product-pricing">
+        {% if producto.oferta_activa and producto.precio_oferta and producto.precio_oferta < producto.precio %}
+            <span class="original-price">${{ producto.precio|floatformat:2 }}</span>
+            <span class="sale-price">${{ producto.precio_oferta|floatformat:2 }}</span>
+        {% else %}
+            <span class="price">${{ producto.precio|floatformat:2 }}</span>
+        {% endif %}
+    </div>
+</div>
+
+{% block extra_js %}
+<script src="{% static 'productos/js/tarjeta_producto_carrusel.js' %}"></script>
+{% endblock %} 

@@ -1,0 +1,58 @@
+/*
+Estilos para la tarjeta de producto individual, incluyendo botones de wishlist, carrito, animaciones y precios.
+*/
+
+.wishlist-btn.active i,
+.modal-wishlist-btn.active i {
+  color: #111 !important;
+}
+.wishlist-btn i,
+.modal-wishlist-btn i {
+  transition: color 0.2s;
+}
+.wishlist-btn:hover i,
+.modal-wishlist-btn:hover i {
+  color: #555;
+}
+.product-stock, .modal-stock { margin-bottom: 8px; color: #555555; text-align: center; }
+.wishlist-btn.pop i, .modal-wishlist-btn.pop i {
+  animation: pop-heart 0.35s cubic-bezier(.36,1.56,.64,1) 1;
+}
+@keyframes pop-heart {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.3); }
+  60% { transform: scale(0.85); }
+  100% { transform: scale(1); }
+}
+.cart-btn i,
+.modal-cart-btn i,
+.wishlist-btn i,
+.modal-wishlist-btn i {
+  color: #bbb;
+  transition: color 0.2s;
+}
+.cart-btn.active i,
+.modal-cart-btn.active i,
+.cart-btn.pop i,
+.modal-cart-btn.pop i,
+.cart-btn .cart-filled,
+.modal-cart-btn .cart-filled,
+.wishlist-btn.active i,
+.modal-wishlist-btn.active i {
+  color: #ffffff !important;
+}
+.cart-btn:hover i,
+.modal-cart-btn:hover i,
+.wishlist-btn:hover i,
+.modal-wishlist-btn:hover i {
+  color: #ffffff;
+}
+.cart-btn.pop i, .modal-cart-btn.pop i {
+  animation: pop-heart 0.35s cubic-bezier(.36,1.56,.64,1) 1;
+}
+@keyframes pop-heart {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.3); }
+  60% { transform: scale(0.85); }
+  100% { transform: scale(1); }
+} 

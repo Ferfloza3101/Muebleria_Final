@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Nuestra Historia | Umbra Furniture{% endblock %}
+
+{% block extra_css %}
+<style>
+  .section { max-width: 900px; margin: 88px auto 64px; padding: 0 16px; }
+  .section h1 { font-size: 36px; margin-bottom: 8px; }
+  .muted { color:#666; margin-bottom: 24px; }
+  .timeline { border-left: 2px solid #eee; padding-left: 16px; }
+  .timeline-item { margin: 16px 0; }
+  .timeline-item h3 { margin: 0 0 6px; font-size: 18px; }
+  .timeline-item p { margin: 0; color:#555; }
+  .back-link { display:inline-block; margin-top: 24px; color:#111; text-decoration:none; border-bottom:1px solid #111; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="section">
+  <h1>Nuestra historia</h1>
+  <p class="muted">Una línea de tiempo de los momentos que definieron a Umbra Furniture.</p>
+  <div class="timeline">
+    <div class="timeline-item">
+      <h3>2015 — Nace la idea</h3>
+      <p>Arrancamos con un pequeño taller y una gran visión: muebles duraderos con estética moderna.</p>
+    </div>
+    <div class="timeline-item">
+      <h3>2018 — Primera colección</h3>
+      <p>Lanzamos nuestra colección insignia integrando maderas certificadas y procesos responsables.</p>
+    </div>
+    <div class="timeline-item">
+      <h3>2022 — Expansión digital</h3>
+      <p>Consolidamos nuestra tienda en línea para llegar a más hogares.</p>
+    </div>
+  </div>
+  <a class="back-link" href="{% url 'sobre_nosotros' %}">Volver a Sobre nosotros</a>
+  </div>
+{% endblock %}
+
+
+

@@ -1,0 +1,16 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mueblería - Bienvenido</title>
+    <link rel="stylesheet" href="{% static 'login/css/inicio.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Bienvenido a la Mueblería</h1>
+        <a href="{% url 'login:login' %}" class="btn">Iniciar Sesión</a>
+        <a href="{% url 'login:registro' %}" class="btn btn-verde">Registrarse</a>
+    </div>
+</body>
+</html> 

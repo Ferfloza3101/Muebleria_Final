@@ -1,0 +1,21 @@
+Resumen de la sesión de trabajo - Mueblería OPTI
+===============================================
+
+Fecha: 17/07/2025
+
+1. **Integración de MercadoPago en el flujo de checkout**
+   - Se implementó la lógica para generar la preferencia de pago de MercadoPago desde el backend, utilizando el SDK oficial y las credenciales configuradas en settings.py.
+   - Se corrigió el uso de los campos de dirección para que coincidan con el modelo (por ejemplo, 'numero_exterior' en vez de 'numero').
+   - Se creó una vista protegida que recibe la dirección y el carrito, y responde con la URL de pago de MercadoPago.
+   - Se actualizó el JavaScript del checkout para que, al hacer clic en "Pagar con MercadoPago", se haga una petición AJAX y se redirija al usuario a la página de pago.
+   - Se corrigió la referencia al archivo JS en el template de confirmación de pedido.
+   - Se agregó logging y manejo de errores para depuración.
+   - Se detectó que MercadoPago requiere URLs públicas y no acepta localhost/127.0.0.1 en los back_urls.
+
+
+**Siguiente paso:**
+- Probar el flujo de pago usando una URL pública temporal (por ejemplo, con ngrok) para que MercadoPago acepte los back_urls y puedas completar el flujo de pago.
+
+---
+
+*Puedes continuar desde aquí probando el flujo con ngrok o desplegando en un servidor público según lo requieras.* 

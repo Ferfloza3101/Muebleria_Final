@@ -1,0 +1,26 @@
+{% load static %}
+{% if wishlist_menu and wishlist_menu.productos.exists %}
+  <div class="wishlist-list">
+    {% for producto in wishlist_menu.productos.all %}
+      <div class="wishlist-item-row">
+        <a href="{% url 'productos:detalle_producto' producto.id %}" class="wishlist-item-link flex-align">
+          <img src="{{ producto.imagen_principal.url }}" alt="{{ producto.nombre }}" class="wishlist-thumb">
+          <span class="wishlist-title">{{ producto.nombre }}</span>
+          <span class="wishlist-price">${{ producto.precio_actual|floatformat:2 }}</span>
+        </a>
+        <span class="wishlist-actions">
+          <button class="wishlist-remove-btn" title="Quitar de favoritos" data-product-id="{{ producto.id }}">
+            <i class="fas fa-heart"></i>
+          </button>
+          <button class="wishlist-cart-btn" title="Agregar al carrito" data-product-id="{{ producto.id }}">
+            <i class="fas fa-shopping-cart"></i>
+          </button>
+        </span>
+      </div>
+    {% endfor %}
+  </div>
+  <span id="wishlist-badge" class="wishlist-badge">{{ wishlist_menu.productos.count }}</span>
+{% else %}
+  <div class="wishlist-empty">No tienes favoritos aún.</div>
+{% endif %}
+<link rel="stylesheet" href="{% static 'productos/css/wishlist_menu.css' %}">

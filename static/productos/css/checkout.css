@@ -1,0 +1,124 @@
+.checkout-container {
+    max-width: 800px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    padding: 32px 24px;
+}
+.checkout-title {
+    font-size: 2rem;
+    margin-bottom: 24px;
+    text-align: center;
+}
+.checkout-lista {
+    margin-bottom: 24px;
+}
+.checkout-item {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding: 16px 0;
+}
+.checkout-item-img img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-right: 20px;
+}
+.checkout-item-info {
+    flex: 1;
+}
+.checkout-item-nombre {
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+.checkout-item-precio,
+.checkout-item-cantidad,
+.checkout-item-subtotal {
+    font-size: 1rem;
+    margin-bottom: 2px;
+}
+.checkout-total {
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: right;
+    margin-bottom: 24px;
+}
+.checkout-acciones {
+    text-align: right;
+    margin-bottom: 16px;
+}
+.checkout-acciones-center {
+    text-align: center;
+}
+.checkout-btn-pagar {
+    background: #111;
+    color: #fff;
+    border: none;
+    padding: 12px 32px;
+    border-radius: 4px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.checkout-btn-pagar:hover {
+    background: #333;
+}
+.checkout-vacio {
+    text-align: center;
+    color: #888;
+    margin: 40px 0;
+}
+.checkout-links {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 32px;
+}
+.checkout-links a {
+    color: #111;
+    text-decoration: none;
+    font-weight: 500;
+}
+.checkout-links a:hover {
+    text-decoration: underline;
+    color: #333;
+}
+.oculto { display: none; }
+.checkout-prueba-form {
+    margin-top: 10px;
+}
+.direccion-item--nueva {
+    outline: 2px solid #111;
+    border-radius: 6px;
+}
+.checkout-item-confirm {
+    border-bottom: 1px solid #eee;
+    padding: 18px 0 10px 0;
+    margin-bottom: 0;
+    display: flex;
+    align-items: flex-start;
+}
+.checkout-item-confirm .checkout-item-info {
+    width: 100%;
+}
+.checkout-item-nombre {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #111;
+}
+.checkout-item-cantidad-sub {
+    display: flex;
+    gap: 32px;
+    font-size: 1rem;
+    color: #444;
+    margin-bottom: 0;
+}
+.checkout-item-cantidad {
+    font-weight: 400;
+}
+.checkout-item-subtotal {
+    font-weight: 400;
+} 

@@ -1,0 +1,63 @@
+{% extends 'forms/base_form.html' %}
+{% load static %}
+
+{% block form_title %}Registro de Usuario{% endblock %}
+{% block form_heading %}Registro{% endblock %}
+{% block form_button_class %}success{% endblock %}
+{% block form_button_text %}Registrarse{% endblock %}
+
+{% block form_content %}
+<div class="form-group">
+    <label for="nombre" class="form-label">Nombre</label>
+    <input type="text" name="nombre" id="nombre" class="form-input" required>
+</div>
+
+<div class="form-group">
+    <label for="apellidos" class="form-label">Apellidos</label>
+    <input type="text" name="apellidos" id="apellidos" class="form-input" required>
+</div>
+
+<div class="form-group">
+    <label for="correo" class="form-label">Correo electrónico</label>
+    <input type="email" name="correo" id="correo" class="form-input" required>
+</div>
+
+<div class="form-group">
+    <label for="username" class="form-label">Usuario</label>
+    <input type="text" name="username" id="username" class="form-input" required>
+</div>
+
+<div class="form-group">
+    <label for="password" class="form-label">Contraseña</label>
+    <input type="password" name="password" id="password" class="form-input" required 
+           placeholder="Mínimo 8 caracteres, 1 mayúscula, 1 especial">
+</div>
+
+<div class="form-group">
+    <label for="fecha_nacimiento" class="form-label">Fecha de nacimiento</label>
+    <input type="date" name="fecha_nacimiento" id="fecha_nacimiento" class="form-input" required>
+</div>
+
+<div class="form-group">
+    <label for="genero" class="form-label">Género</label>
+    <select name="genero" id="genero" class="form-select" required>
+        <option value="">Selecciona...</option>
+        <option value="masculino">Masculino</option>
+        <option value="femenino">Femenino</option>
+    </select>
+</div>
+
+<div class="form-group">
+    <label for="direccion" class="form-label">Dirección</label>
+    <input type="text" name="direccion" id="direccion" class="form-input" required>
+</div>
+
+<div class="form-group">
+    <label for="telefono" class="form-label">Teléfono</label>
+    <input type="text" name="telefono" id="telefono" class="form-input" required>
+</div>
+{% endblock %}
+
+{% block form_links %}
+<a href="{% url 'home' %}" class="form-link">Volver al inicio</a>
+{% endblock %} 

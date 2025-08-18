@@ -1,0 +1,259 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Inicio | Mueblería en Línea{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<link rel="stylesheet" href="{% static 'productos/css/styles.css' %}">
+<link rel="stylesheet" href="{% static 'productos/css/carrusel.css' %}">
+<link rel="stylesheet" href="{% static 'css/home_products_grid.css' %}">
+<link rel="stylesheet" href="{% static 'css/suscripcion_form.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- Carrusel de productos -->
+<div class="hero-carousel swiper">
+    <div class="swiper-wrapper">
+        {% for producto in productos_carrusel %}
+        <div class="swiper-slide">
+            <div class="slide-content">
+                <img src="{{ producto.imagen_principal.url }}" 
+                     alt="{{ producto.nombre }}" 
+                     class="slide-image">
+                <div class="slide-info">
+                    <h2>{{ producto.nombre }}</h2>
+                    <p>{{ producto.descripcion|truncatewords:30 }}</p>
+                    <div class="slide-price">
+                        {% if producto.oferta_activa and producto.precio_oferta %}
+                            <span class="original">${{ producto.precio }}</span>
+                            <span class="offer">${{ producto.precio_oferta }}</span>
+                        {% else %}
+                            <span>${{ producto.precio }}</span>
+                        {% endif %}
+                    </div>
+                    <a href="{% url 'productos:lista_productos' %}" 
+                       class="slide-button" 
+                       data-product-id="{{ producto.id }}">
+                        Ver Producto
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <!-- Navegación -->
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+    <!-- Paginación -->
+    <div class="swiper-pagination"></div>
+</div>
+
+<!-- Modales de productos -->
+{% for producto in productos_carrusel %}
+    {% include 'forms/modal_base.html' with producto=producto %}
+{% endfor %}
+
+<!-- Grid de productos destacados -->
+<section class="home-products-grid">
+    <!-- Tarjeta 1: Texto fijo -->
+    <div class="home-product-card home-green-bg">
+        <div class="home-product-info">
+            <h2>OUTDOOR<br>FURNITURE<br>SYDNEY</h2>
+            <a href="{% url 'productos:lista_productos' %}">VER DETALLES &rarr;</a>
+        </div>
+    </div>
+    <!-- Tarjeta 2: Imagen de producto real -->
+    {% if productos_grid.0 %}
+    <div class="home-product-card open-modal-btn" data-product-id="{{ productos_grid.0.id }}">
+        <img src="{{ productos_grid.0.imagen_principal.url }}" alt="{{ productos_grid.0.nombre }}">
+    </div>
+    {% endif %}
+    <!-- Tarjeta 3: Texto fijo -->
+    <div class="home-product-card home-blue-bg">
+        <div class="home-product-info">
+            <h2>DESIGN BY<br>UMBRA<br>MODERN 2015</h2>
+            <a href="{% url 'productos:lista_productos' %}">VER DETALLES &rarr;</a>
+        </div>
+    </div>
+    <!-- Tarjeta 4: Imagen de producto real -->
+    {% if productos_grid.1 %}
+    <div class="home-product-card home-blue-bg open-modal-btn" data-product-id="{{ productos_grid.1.id }}">
+        <img src="{{ productos_grid.1.imagen_principal.url }}" alt="{{ productos_grid.1.nombre }}">
+    </div>
+    {% endif %}
+    <!-- Tarjeta 5: Imagen de producto real -->
+    {% if productos_grid.2 %}
+    <div class="home-product-card home-green-bg open-modal-btn" data-product-id="{{ productos_grid.2.id }}">
+        <img src="{{ productos_grid.2.imagen_principal.url }}" alt="{{ productos_grid.2.nombre }}">
+    </div>
+    {% endif %}
+    <!-- Tarjeta 6: Texto fijo -->
+    <div class="home-product-card home-gray-bg">
+        <div class="home-product-info">
+            <h2>CERAMICS<br>JOSH<br>HERMAN</h2>
+            <a href="{% url 'productos:lista_productos' %}">VER DETALLES &rarr;</a>
+        </div>
+    </div>
+    <!-- Tarjeta 7: Imagen de producto real -->
+    {% if productos_grid.3 %}
+    <div class="home-product-card home-gray-bg open-modal-btn" data-product-id="{{ productos_grid.3.id }}">
+        <img src="{{ productos_grid.3.imagen_principal.url }}" alt="{{ productos_grid.3.nombre }}">
+    </div>
+    {% endif %}
+    <!-- Tarjeta 8: Imagen de producto real -->
+    {% if productos_grid.4 %}
+    <div class="home-product-card open-modal-btn" data-product-id="{{ productos_grid.4.id }}">
+        <img src="{{ productos_grid.4.imagen_principal.url }}" alt="{{ productos_grid.4.nombre }}">
+    </div>
+    {% endif %}
+</section>
+
+<!-- Modales de productos del grid -->
+{% for producto in productos_grid %}
+    {% include 'forms/modal_base.html' with producto=producto %}
+{% endfor %}
+
+<!-- Top Productos -->
+<div class="top-products-section">
+    <h2 class="top-products-title">Top Productos</h2>
+    <div class="top-products-subtitle">Lo mejor de 2025</div>
+    <div class="top-products-grid">
+        {% for producto in top_productos %}
+            {% include 'productos/tarjeta_producto.html' with producto=producto wishlist_ids=wishlist_ids %}
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Modales de productos top -->
+{% for producto in top_productos %}
+    {% include 'forms/modal_base.html' with producto=producto %}
+{% endfor %}
+
+<!-- Botón Ver Más debajo de Top Productos -->
+<div class="ver-mas-container">
+    <a href="{% url 'productos:lista_productos' %}" class="btn-ver-mas">Ver Más</a>
+</div>
+
+{# Banner Promocional Dinámico #}
+{% if banner %}
+<section class="promo-banner" id="promo-banner">
+    <div class="promo-banner-inner">
+        <!-- Lado Izquierdo: Imagen, textos y contador -->
+        <div class="promo-banner-left">
+            {% if banner.imagen_lateral %}
+                <img src="{{ banner.imagen_lateral.url }}" alt="Banner" class="promo-banner-img">
+            {% endif %}
+            <div class="promo-banner-texts">
+                <h2 class="promo-banner-title">{{ banner.titulo }}</h2>
+                {% if banner.subtitulo %}<div class="promo-banner-subtitle">{{ banner.subtitulo }}</div>{% endif %}
+                {% if banner.texto %}<p class="promo-banner-desc">{{ banner.texto }}</p>{% endif %}
+                <div class="promo-banner-countdown" data-end="{{ banner.fecha_fin|date:'Y-m-d H:i:s' }}"></div>
+                <a href="{% url 'productos:lista_productos' %}" class="promo-banner-btn">{{ banner.texto_boton }}</a>
+            </div>
+        </div>
+        <!-- Lado Derecho: Producto destacado y carrusel -->
+        <div class="promo-banner-right">
+            {% if banner.producto_destacado %}
+                <div class="promo-banner-producto">
+                    <div class="promo-banner-descuento">{{ banner.texto_descuento }}</div>
+                    <div class="promo-banner-producto-info">
+                        <div class="promo-banner-producto-nombre">{{ banner.producto_destacado.nombre }}</div>
+                        <div class="promo-banner-producto-precio">
+                            {% if banner.producto_destacado.precio_oferta %}
+                                <span class="oferta">${{ banner.producto_destacado.precio_oferta }}</span>
+                                <span class="original">${{ banner.producto_destacado.precio }}</span>
+                            {% else %}
+                                <span>${{ banner.producto_destacado.precio }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <img src="{{ banner.producto_destacado.imagen_principal.url }}" alt="{{ banner.producto_destacado.nombre }}" class="promo-banner-producto-img">
+                </div>
+            {% endif %}
+            {% if banner_productos_carrusel %}
+                <div class="promo-banner-carrusel">
+                    {% for producto in banner_productos_carrusel %}
+                        <div class="promo-banner-carrusel-img-wrapper">
+                            <img src="{{ producto.imagen_principal.url }}" alt="{{ producto.nombre }}" class="promo-banner-carrusel-img">
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Marcas Aliadas -->
+<div class="marcas-aliadas-container">
+    <img src="/media/Marcas/Linea_marcas.PNG" alt="Marcas Aliadas" class="marcas-aliadas-img">
+</div>
+
+<!-- Furniture Blog Section -->
+<section class="furniture-blog-section">
+    <h2 class="furniture-blog-title">Furniture Blog</h2>
+    <div class="furniture-blog-subtitle">Lo más reciente</div>
+    <div class="furniture-blog-grid">
+        {% for blog in blogs_recientes %}
+        <div class="furniture-blog-row {% if forloop.counter0|divisibleby:2 %}row-normal{% else %}row-reverse{% endif %}">
+            <div class="furniture-blog-img-col">
+                {% if blog.imagen %}
+                    <img src="{{ blog.imagen.url }}" alt="{{ blog.titulo }}" class="furniture-blog-img">
+                {% endif %}
+            </div>
+            <div class="furniture-blog-text-col">
+                <div class="furniture-blog-categoria">{{ blog.get_categoria_display|upper }}</div>
+                <div class="furniture-blog-titulo">{{ blog.titulo }}</div>
+                <div class="furniture-blog-extracto">{{ blog.contenido|truncatewords:35 }}</div>
+                <a href="{% url 'blog:detalle_blog' blog.id %}" class="furniture-blog-btn">Leer más</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Grid Decorativa de Imágenes -->
+<section class="decoraciones-grid-section">
+    <div class="decoraciones-container">
+        <div class="decoraciones-grid">
+            <img src="/media/Decoraciones/1.PNG" alt="Decoración 1" class="decoracion-img">
+            <img src="/media/Decoraciones/2.PNG" alt="Decoración 2" class="decoracion-img">
+            <img src="/media/Decoraciones/3.PNG" alt="Decoración 3" class="decoracion-img">
+            <img src="/media/Decoraciones/4.PNG" alt="Decoración 4" class="decoracion-img">
+            <img src="/media/Decoraciones/5.PNG" alt="Decoración 5" class="decoracion-img">
+        </div>
+    </div>
+</section>
+
+<!-- Formulario de Suscripción Email -->
+<section class="suscripcion-section">
+    {% if mensaje_suscripcion %}
+        <div class="suscripcion-mensaje {{ mensaje_tipo }}">
+            {% if mensaje_tipo == 'exito' %}
+                <i class="fas fa-check-circle"></i>
+            {% else %}
+                <i class="fas fa-exclamation-circle"></i>
+            {% endif %}
+            {{ mensaje_suscripcion }}
+</div>
+    {% endif %}
+    <form method="post" class="suscripcion-form" autocomplete="off">
+        {% csrf_token %}
+        {{ form_suscripcion.email }}
+        <button type="submit" class="suscripcion-btn">
+            <i class="fas fa-envelope"></i>
+            Suscribirme
+        </button>
+    </form>
+    <div class="suscripcion-desc">Recibe novedades y promociones exclusivas en tu correo.</div>
+</section>
+<!-- Fin Formulario Suscripción -->
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
+<script src="{% static 'productos/js/carrusel.js' %}" defer></script>
+<script src="{% static 'productos/js/modal_producto.js' %}" defer></script>
+<script src="{% static 'js/home_products_grid.js' %}" defer></script>
+{% endblock %}

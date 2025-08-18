@@ -1,0 +1,114 @@
+/* Estilos minimalistas y profesionales para la lista de pedidos */
+.pedidos-lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    justify-content: flex-start;
+}
+.pedido-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    padding: 24px 20px 16px 20px;
+    min-width: 320px;
+    max-width: 400px;
+    flex: 1 1 340px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0;
+    transition: box-shadow 0.2s;
+    position: relative;
+    padding-bottom: 56px;
+}
+.pedido-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+}
+.pedido-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+.pedido-numero {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #111;
+}
+.pedido-estado {
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 16px;
+    background: #f5f5f5;
+    color: #222;
+    border: 1px solid #e0e0e0;
+    text-transform: capitalize;
+}
+.pedido-estado.pendiente { color: #bfa100; background: #fffbe6; border-color: #fff3cd; }
+.pedido-estado.procesando { color: #0056b3; background: #e6f0ff; border-color: #b3d1ff; }
+.pedido-estado.enviado { color: #222; background: #f0f0f0; border-color: #d1d1d1; }
+.pedido-estado.entregado { color: #0a7d00; background: #e6ffe6; border-color: #b3ffb3; }
+.pedido-info {
+    font-size: 0.98rem;
+    color: #222;
+    margin-bottom: 24px;
+}
+.pedido-info strong {
+    color: #111;
+    font-weight: 500;
+}
+.pedido-acciones {
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+    justify-content: flex-end;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 18px;
+    padding: 32px 20px 0 20px;
+}
+.pedido-acciones .btn {
+    font-size: 0.85rem;
+    border-radius: 8px;
+    padding: 4px 10px;
+    border: 1px solid #111;
+    background: #fff;
+    color: #111;
+    font-weight: bold;
+    transition: background 0.2s, color 0.2s;
+    min-width: 90px;
+    text-decoration: none;
+}
+.pedido-acciones .btn:visited {
+    color: #111;
+    text-decoration: none;
+}
+.pedido-acciones .btn-primary,
+.pedido-acciones .btn-success,
+.pedido-acciones .btn-info {
+    background: #fff;
+    color: #111;
+    border: 1px solid #111;
+    font-weight: bold;
+    text-decoration: none;
+}
+.pedido-acciones .btn:hover,
+.pedido-acciones .btn-primary:hover,
+.pedido-acciones .btn-success:hover,
+.pedido-acciones .btn-info:hover {
+    background: #111;
+    color: #fff;
+    text-decoration: none;
+}
+@media (max-width: 900px) {
+    .pedidos-lista {
+        flex-direction: column;
+        gap: 20px;
+    }
+    .pedido-card {
+        min-width: 0;
+        max-width: 100%;
+    }
+}

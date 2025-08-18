@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Mis Favoritos{% endblock %}
+{% block content %}
+<h2>Mis Favoritos</h2>
+<div class="wishlist-list-page">
+  {% if wishlist.productos.exists %}
+    <div class="wishlist-list">
+      {% for producto in wishlist.productos.all %}
+        <a href="{% url 'productos:detalle_producto' producto.id %}" class="wishlist-item">
+          <img src="{{ producto.imagen_principal.url }}" alt="{{ producto.nombre }}" class="wishlist-thumb">
+          <span class="wishlist-title">{{ producto.nombre }}</span>
+          <span class="wishlist-price">${{ producto.precio_actual|floatformat:2 }}</span>
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="wishlist-empty">No tienes productos en favoritos.</div>
+  {% endif %}
+</div>
+<link rel="stylesheet" href="{% static 'productos/css/favoritos.css' %}">
+{% endblock %} 
+
+{% block footer %}{% endblock %}

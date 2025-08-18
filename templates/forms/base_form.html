@@ -1,0 +1,35 @@
+{% comment %}
+Template base para nuestros formularios
+{% endcomment %}
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block form_title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'usuarios/css/form_minimal.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <div class="form-minimal-container">
+        <h1 class="form-minimal-title">{% block form_heading %}{% endblock %}</h1>
+        {% if mensaje %}
+            <div class="form-minimal-error">{{ mensaje }}</div>
+        {% endif %}
+        <form method="post" class="form-minimal">
+            {% csrf_token %}
+            {% block form_content %}{% endblock %}
+            <button type="submit" class="form-minimal-btn">
+                {% block form_button_text %}Enviar{% endblock %}
+            </button>
+        </form>
+        <div class="form-minimal-links">
+        {% block form_links %}{% endblock %}
+        </div>
+    </div>
+    {% block extra_js %}{% endblock %}
+</body>
+</html> 

@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Agregar dirección</title>
+    <link rel="stylesheet" href="{% static 'productos/css/checkout.css' %}">
+    <link rel="stylesheet" href="{% static 'usuarios/css/perfil.css' %}">
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_API_KEY }}&libraries=places"></script>
+</head>
+<body>
+<div class="checkout-container">
+    <h1 class="checkout-title">Agregar nueva dirección</h1>
+    <form method="post" id="form-direccion" autocomplete="off">
+        {% csrf_token %}
+        <div class="perfil-form-row">
+            <label for="id_busqueda_direccion">Buscar dirección</label>
+            <input type="text" id="id_busqueda_direccion" name="busqueda_direccion" placeholder="Escribe tu dirección...">
+            <small class="form-help">Escribe tu dirección y selecciona de las sugerencias para autocompletar los campos</small>
+        </div>
+        <div class="perfil-form-row">
+            <label for="id_nombre">Nombre de la dirección</label>
+            <input type="text" id="id_nombre" name="nombre" required>
+        </div>
+        <div class="perfil-form-row">
+            <label for="id_calle">Calle</label>
+            <input type="text" id="id_calle" name="calle" required>
+        </div>
+        <div class="perfil-form-row perfil-form-row--inline">
+            <div class="perfil-form-col">
+                <label for="id_numero_exterior">Número exterior</label>
+                <input type="text" id="id_numero_exterior" name="numero_exterior" required>
+            </div>
+            <div class="perfil-form-col">
+                <label for="id_numero_interior">Número interior (opcional)</label>
+                <input type="text" id="id_numero_interior" name="numero_interior">
+            </div>
+        </div>
+        <div class="perfil-form-row">
+            <label for="id_colonia">Colonia</label>
+            <input type="text" id="id_colonia" name="colonia" required>
+        </div>
+        <div class="perfil-form-row perfil-form-row--inline">
+            <div class="perfil-form-col">
+                <label for="id_ciudad">Ciudad</label>
+                <input type="text" id="id_ciudad" name="ciudad" required>
+            </div>
+            <div class="perfil-form-col">
+                <label for="id_estado">Estado</label>
+                <input type="text" id="id_estado" name="estado" required>
+            </div>
+        </div>
+        <div class="perfil-form-row">
+            <label for="id_codigo_postal">Código Postal</label>
+            <input type="text" id="id_codigo_postal" name="codigo_postal" required>
+        </div>
+        <div class="perfil-form-row">
+            <label for="id_telefono">Teléfono</label>
+            <input type="text" id="id_telefono" name="telefono">
+        </div>
+        <div class="perfil-form-row">
+            <label for="id_referencias">Referencias (opcional)</label>
+            <input type="text" id="id_referencias" name="referencias">
+        </div>
+        <div class="checkout-acciones checkout-acciones-center">
+            <button type="submit" class="checkout-btn-pagar">Guardar dirección</button>
+        </div>
+    </form>
+    <div id="direccion-exito" class="perfil-placeholder perfil-message perfil-message--success oculto">¡Dirección guardada!</div>
+    <div id="direccion-error" class="perfil-placeholder perfil-message perfil-message--error oculto"></div>
+    <div class="checkout-links">
+        <a href="/productos/carrito/seleccionar-direccion/">Volver</a>
+    </div>
+    <script src="{% static 'usuarios/js/direcciones.js' %}"></script>
+</div>
+</body>
+</html> 

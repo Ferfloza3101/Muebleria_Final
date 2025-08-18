@@ -1,0 +1,144 @@
+/*
+Estilos para el carrusel principal de productos en la página de inicio
+*/
+
+.hero-carousel {
+    width: 100%;
+    height: 600px;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.swiper-slide {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.slide-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    background: #00000066;
+}
+
+.slide-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+.slide-info {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    color: #ffffff;
+    text-align: left;
+    position: relative;
+    z-index: 2;
+    text-shadow: 2px 2px 4px #00000080;
+}
+
+.slide-info h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    font-family: 'Raleway', sans-serif;
+    font-weight: bold;
+}
+
+.slide-info p {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    max-width: 600px;
+}
+
+.slide-price {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+}
+
+.slide-price .original {
+    text-decoration: line-through;
+    color: #cccccc;
+    margin-right: 1rem;
+}
+
+.slide-price .offer {
+    color: #ffffff;
+}
+
+.slide-button {
+    display: inline-block;
+    padding: 0.7rem 1.5rem;
+    background-color: transparent;
+    color: #ffffff;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.slide-button:hover {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+    color: #ffffff !important;
+    background: #00000080;
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50%;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+    font-size: 20px !important;
+}
+
+.swiper-pagination-bullet {
+    background: #ffffff !important;
+    opacity: 0.5;
+}
+
+.swiper-pagination-bullet-active {
+    opacity: 1 !important;
+    background: #111 !important;
+}
+
+@media (max-width: 768px) {
+    .hero-carousel {
+        height: 400px;
+    }
+    .slide-content {
+        background: #000000
+    }
+    .slide-info {
+        padding: 1rem;
+    }
+    .slide-info h2 {
+        font-size: 1.8rem;
+    }
+    .slide-info p {
+        font-size: 1rem;
+        max-width: 100%;
+    }
+    .slide-price {
+        font-size: 1.4rem;
+    }
+}
+
+.modal-stock { margin-bottom: 12px; color: #555555; } 

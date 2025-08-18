@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'productos/css/styles.css' %}">
+{% endblock %}
+
+{% block title %}Nuestros Productos{% endblock %}
+
+{% block content %}
+<div class="products-page">
+    <div class="categorias-list">
+        <a href="#" data-categoria="" class="{% if not categoria_actual %}active{% endif %}">Ver todos los muebles</a>
+        {% for cat in categorias %}
+            <a href="#" data-categoria="{{ cat.slug }}" class="{% if categoria_actual == cat.slug %}active{% endif %}">{{ cat.nombre }}</a>
+        {% endfor %}
+        <a href="#" data-categoria="ofertas" class="categoria-link categoria-ofertas{% if categoria_actual == 'ofertas' %} active{% endif %}">Ofertas</a>
+    </div>
+    <div id="productos-grid-container">
+        {% include 'productos/partials/grid_productos.html' %}
+    </div>
+</div>
+
+<!-- Modales de productos -->
+{% for producto in productos %}
+    {% include 'forms/modal_base.html' with producto=producto wishlist_ids=wishlist_ids %}
+{% endfor %}
+
+{% block extra_js %}
+<script src="{% static 'productos/js/productos_modal_trigger.js' %}"></script>
+<script src="{% static 'productos/js/filtrado_categorias.js' %}"></script>
+{% endblock %}
+{% endblock %} 

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Ideas para ti | Blog{% endblock %}
+{% block content %}
+<div class="blog-section">
+    <h1 class="blog-title">Ideas para ti</h1>
+    <div class="blog-categorias">
+        <a href="{% url 'blog:listado_blog' %}" class="blog-categoria{% if not categoria_actual %} active{% endif %}">Todos</a>
+        {% for cat, cat_label in categorias %}
+            <a href="{% url 'blog:listado_blog' %}?categoria={{ cat }}" class="blog-categoria{% if categoria_actual == cat %} active{% endif %}">{{ cat_label }}</a>
+        {% endfor %}
+    </div>
+    <div class="blog-listado">
+        {% for blog in blogs %}
+            <div class="blog-card">
+                <div class="blog-card-content">
+                    <a href="{% url 'blog:detalle_blog' blog.id %}">
+                        {% if blog.imagen %}
+                            <img src="{{ blog.imagen.url }}" alt="{{ blog.titulo }}" class="blog-card-img">
+                        {% endif %}
+                    </a>
+                    <div class="blog-card-title">{{ blog.titulo }}</div>
+                </div>
+                <div class="blog-card-actions">
+                    <div class="blog-card-likes">
+                        {% if user.is_authenticated %}
+                            <form method="post" action="{% url 'blog:like_blog' blog.id %}" class="like-form">{% csrf_token %}
+                                <button type="submit" class="like-btn"><i class="{% if blog.liked_by_user %}fas{% else %}far{% endif %} fa-thumbs-up"></i></button>
+                            </form>
+                        {% else %}
+                            <button class="like-btn" disabled><i class="far fa-thumbs-up"></i></button>
+                        {% endif %}
+                        <span class="like-count">{{ blog.num_likes }}</span>
+                    </div>
+                    <a href="{% url 'blog:detalle_blog' blog.id %}#comentarios" class="blog-card-comments">
+                        <i class="far fa-comments blog-comment-icon"></i> {{ blog.num_comentarios }}
+                    </a>
+                </div>
+            </div>
+        {% empty %}
+            <div class="blog-empty">No hay blogs disponibles.</div>
+        {% endfor %}
+    </div>
+    {% if page_obj.has_other_pages %}
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}{% if categoria_actual %}&categoria={{ categoria_actual }}{% endif %}">&laquo;</a>
+        {% endif %}
+        <span>{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}{% if categoria_actual %}&categoria={{ categoria_actual }}{% endif %}">&raquo;</a>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/blog.css' %}">
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/blog.js' %}"></script>
+{% endblock %}

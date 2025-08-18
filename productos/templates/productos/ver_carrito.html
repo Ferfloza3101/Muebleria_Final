@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Carrito de Compras</title>
+    <link rel="stylesheet" href="{% static 'productos/css/ver_carrito.css' %}">
+</head>
+<body>
+<div class="carrito-container">
+    <h1 class="carrito-title">Carrito de compras</h1>
+    {% if items and items|length > 0 %}
+        <div class="carrito-lista">
+            {% for item in items %}
+            <div class="carrito-item" data-id="{{ item.producto.id }}">
+                <div class="carrito-item-img">
+                    <img src="{{ item.producto.imagen_principal.url }}" alt="{{ item.producto.nombre }}">
+                </div>
+                <div class="carrito-item-info">
+                    <div class="carrito-item-nombre">{{ item.producto.nombre }}</div>
+                    <div class="carrito-item-precio">${{ item.precio_unitario|floatformat:2 }}</div>
+                    <div class="carrito-item-cantidad">
+                        <button class="carrito-btn-cantidad menos" data-action="decrease">-</button>
+                        <span class="cantidad">{{ item.cantidad }}</span>
+                        <button class="carrito-btn-cantidad mas" data-action="increase">+</button>
+                    </div>
+                    <div class="carrito-item-subtotal">Subtotal: ${{ item.subtotal|floatformat:2 }}</div>
+                </div>
+                <button class="carrito-btn-eliminar" data-action="remove">Eliminar</button>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="carrito-total">
+            <span>Total:</span>
+            <span class="carrito-total-monto">${{ total|floatformat:2 }}</span>
+        </div>
+        <div class="carrito-acciones">
+            <button class="carrito-btn-vaciar" id="vaciarCarrito">Vaciar carrito</button>
+            <button class="carrito-btn-pagar" id="btnProcederPago" disabled>Proceder con el pago</button>
+        </div>
+    {% else %}
+        <div class="carrito-vacio">Tu carrito está vacío.</div>
+    {% endif %}
+    <div class="carrito-links">
+        <a href="/productos/">Seguir comprando</a>
+        <a href="/">Volver al inicio</a>
+    </div>
+</div>
+<script src="{% static 'productos/js/ver_carrito.js' %}"></script>
+</body>
+</html> 

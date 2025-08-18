@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Sobre Nosotros | Umbra Furniture{% endblock %}
+
+{% block extra_css %}
+<style>
+  .about-hero { padding: 72px 0 32px; text-align:center; }
+  .about-hero h1 { font-size: 40px; letter-spacing: .5px; margin: 0; }
+  .about-grid { max-width: 1100px; margin: 32px auto 64px; padding: 0 16px; display:grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap: 16px; }
+  .about-card { border: 1px solid #eee; border-radius: 10px; padding: 20px; background: #fff; transition: box-shadow .2s ease; }
+  .about-card:hover { box-shadow: 0 6px 22px rgba(0,0,0,.06); }
+  .about-card h3 { margin: 0 0 8px; font-size: 18px; }
+  .about-card p { margin: 0; color: #666; font-size: 14px; }
+  .about-cta { text-align:center; margin: 16px 0 48px; }
+  .about-cta a { display:inline-block; padding: 10px 16px; border:1px solid #111; border-radius: 999px; color:#111; text-decoration:none; font-weight:600; }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="about-hero">
+  <h1>Sobre Nosotros</h1>
+  <p>Conoce más sobre nuestra historia, propósito y cómo trabajamos.</p>
+</section>
+
+<section class="about-grid">
+  <a class="about-card" href="{% url 'sobre_nosotros_historia' %}">
+    <h3>Nuestra historia</h3>
+    <p>Los hitos que nos trajeron hasta aquí.</p>
+  </a>
+  <a class="about-card" href="{% url 'sobre_nosotros_mision_valores' %}">
+    <h3>Misión y valores</h3>
+    <p>Lo que nos mueve y guía cada decisión.</p>
+  </a>
+  <a class="about-card" href="{% url 'sobre_nosotros_calidad_garantia' %}">
+    <h3>Calidad y garantía</h3>
+    <p>Compromiso con materiales y procesos superiores.</p>
+  </a>
+  <a class="about-card" href="{% url 'sobre_nosotros_sostenibilidad' %}">
+    <h3>Sostenibilidad</h3>
+    <p>Diseñamos pensando en el planeta.</p>
+  </a>
+  <a class="about-card" href="{% url 'sobre_nosotros_equipo' %}">
+    <h3>Equipo profesional</h3>
+    <p>Personas detrás de cada detalle.</p>
+  </a>
+{% endblock %}
+
+
+
