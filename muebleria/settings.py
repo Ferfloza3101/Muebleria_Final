@@ -147,9 +147,30 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
-# Media files
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+# Media files - Azure Blob Storage
+USE_AZURE_STORAGE = os.environ.get('USE_AZURE_STORAGE', 'False').lower() == 'true'
+
+if USE_AZURE_STORAGE:
+    # Azure Blob Storage configuration
+    AZURE_ACCOUNT_NAME = os.environ.get('AZURE_STORAGE_ACCOUNT_NAME')
+    AZURE_ACCOUNT_KEY = os.environ.get('AZURE_STORAGE_ACCOUNT_KEY')
+    AZURE_CONTAINER = os.environ.get('AZURE_STORAGE_CONTAINER_NAME', 'media')
+    
+    # Custom storage backend
+    DEFAULT_FILE_STORAGE = 'muebleria.custom_storage.AzureMediaStorage'
+    STATICFILES_STORAGE = 'muebleria.custom_storage.AzureStaticStorage'
+    
+    # URLs for media files
+    MEDIA_URL = f'https://{AZURE_ACCOUNT_NAME}.blob.core.windows.net/{AZURE_CONTAINER}/media/'
+    STATIC_URL = f'https://{AZURE_ACCOUNT_NAME}.blob.core.windows.net/{AZURE_CONTAINER}/static/'
+    
+    # Azure Storage settings
+    AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
+    AZURE_SSL = True
+else:
+    # Local storage (development)
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
