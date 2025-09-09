@@ -5,6 +5,8 @@ from django.contrib import messages
 from .models import Producto, Categoria, Inventario, Carrito, ItemCarrito, ImagenProducto, Wishlist, BannerPromocional, Pedido, DetallePedido, ResumenPedido
 from .services.pdf_service import PDFService
 from .services.email_service import EmailService
+from .services.excel_service import ExcelExportService
+from django.http import HttpResponse
 
 class ImagenProductoInline(admin.TabularInline):
     model = ImagenProducto
@@ -21,6 +23,17 @@ class ProductoAdmin(admin.ModelAdmin):
     list_filter = ('categoria', 'oferta_activa', 'activo')
     search_fields = ('nombre', 'descripcion')
     inlines = [ImagenProductoInline]
+    actions = ['exportar_inventario_excel']
+
+    def exportar_inventario_excel(self, request, queryset):
+        """Exporta inventario de productos seleccionados a Excel."""
+        productos = queryset.select_related('categoria', 'inventario')
+        content = ExcelExportService.build_inventory_report(productos)
+        response = HttpResponse(content, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        response['Content-Disposition'] = 'attachment; filename="inventario_productos.xlsx"'
+        return response
+
+    exportar_inventario_excel.short_description = "Exportar inventario a Excel"
 
 @admin.register(Categoria)
 class CategoriaAdmin(admin.ModelAdmin):
@@ -85,7 +98,7 @@ class PedidoAdmin(admin.ModelAdmin):
     readonly_fields = ('numero_pedido', 'fecha_pedido', 'fecha_actualizacion')
     inlines = [DetallePedidoInline]
     ordering = ('-fecha_pedido',)
-    actions = ['generar_pdf_manual', 'enviar_email_manual']
+    actions = ['generar_pdf_manual', 'enviar_email_manual', 'exportar_pedidos_excel']
     
     fieldsets = (
         ('Información del Pedido', {
@@ -141,6 +154,16 @@ class PedidoAdmin(admin.ModelAdmin):
                 messages.warning(request, f'No hay resumen para pedido {pedido.numero_pedido}')
     
     enviar_email_manual.short_description = "Enviar email manualmente"
+
+    def exportar_pedidos_excel(self, request, queryset):
+        """Exporta pedidos seleccionados a Excel."""
+        pedidos = queryset.select_related('usuario', 'direccion_envio').prefetch_related('detalles__producto')
+        content = ExcelExportService.build_orders_report(pedidos)
+        response = HttpResponse(content, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        response['Content-Disposition'] = 'attachment; filename="pedidos.xlsx"'
+        return response
+
+    exportar_pedidos_excel.short_description = "Exportar pedidos a Excel"
 
 @admin.register(DetallePedido)
 class DetallePedidoAdmin(admin.ModelAdmin):
