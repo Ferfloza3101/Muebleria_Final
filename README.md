@@ -309,22 +309,10 @@ python manage.py migrate --noinput
 4. Push a la rama (`git push origin feature/AmazingFeature`)
 5. Abrir un Pull Request
 
-## 📄 Licencia
-
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
 
 ## 👨‍💻 Autor
 
-**Francisco Hernández**
-- GitHub: [@tu-usuario](https://github.com/tu-usuario)
-- LinkedIn: [Tu Perfil](https://linkedin.com/in/tu-perfil)
+**Fernando Flores Zaragoza**
+- GitHub: [@Ferfloza3101](https://github.com/Ferfloza3101)
+- Mail: ferfloza2003@gmail.com
 
-## 📞 Soporte
-
-Para soporte técnico o consultas:
-- Email: tu-email@ejemplo.com
-- GitHub Issues: [Crear Issue](https://github.com/tu-usuario/muebleria/issues)
-
----
-
-⭐ **¡Si te gusta este proyecto, no olvides darle una estrella!** ⭐
